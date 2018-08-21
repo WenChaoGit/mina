@@ -1,0 +1,53 @@
+/* page/component/train/train.wxss */
+
+page{
+  overflow-y: hidden;
+}
+.scoll-h{
+  height: calc(100% - 50px);
+  overflow-y: auto;
+}
+.line_none:before{
+    border-top: 0;
+}
+.line_none:after{
+    border-bottom: 0;
+}
+.card_radius {
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.05);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card_radius .weui-form-left{
+  flex: 1;
+}
+.weui_title{
+  font-size: 15px;
+  font-weight: 600;
+  color: #333333;
+}
+.minuBox{
+  font-size: 13px;
+  color: #b6b6b6;
+  margin-top: 5px;
+}
+.weui-form-right image{
+  width:25px;
+  height:25px;
+  margin-top: 5px;
+}
+.start{
+  width: 100%;
+  height: 50px;
+  background: #f04b49;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  color: #fff;
+  line-height: 50px;
+  text-align: center;
+}
+

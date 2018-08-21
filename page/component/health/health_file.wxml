@@ -1,0 +1,54 @@
+<!--pages/my/health/health_file.wxml-->
+<view wx:if="{{info.length == 0}}">
+    <view class='indextextnone'>暂无数据~</view>
+    <image src='../../../image/indexnone.png' class='indexnone_img'></image>
+</view>
+<swiper-item class=''>
+  <scroll-view scroll-y="true" class="scoll-h">
+    <block wx:for="{{info}}" wx:key="*this" wx:for-item="item">
+      <view class="weui-form-preview line_none card_radius block ml mr mt-sm mb-sm" bindtap='healthFileXq' data-no='{{item.id}}'>
+          <view class="weui-form-preview__hd">
+            <view class="weui-form-preview__item text-left">
+              <image src="../../../image/pinggu_icon.png" class="icon_a pull-left"></image>
+              <text class="ml-sm font-bold pull-left font-size-15 health_title">{{item.pe_cate_id}}康复评估</text>
+            </view>
+          </view>
+          <view class="weui-form-preview__bd">
+            <view class="weui-form-preview__item mb-sm">
+              <view class="card_left pull-left">
+                <view class="text-left text-block font-size-15">评估医师：</view>
+              </view>
+              <view class="card_right pull-left">
+                <view class="text-left text-block font-size-15">{{item.admin_id}} </view> 
+              </view>     
+            </view>
+            <view class="weui-form-preview__item mb-sm">
+              <view class="card_left pull-left">
+                <view class="text-left text-block font-size-15">评估时间： </view> 
+              </view>
+              <view class="card_right pull-left">
+                <view class="text-left text-block font-size-15"> {{item.created}}</view>
+              </view>     
+            </view>
+            <view class="weui-form-preview__item mb-sm">
+              <view class="card_left pull-left">
+                <view class="text-left text-block font-size-15">评估门店： </view> 
+              </view>
+              <view class="card_right pull-left">
+                <view class="text-left text-block font-size-15">{{item.store_id}} </view>
+              </view>     
+            </view>
+            <view class="weui-form-preview__item mb-sm">
+              <view class="card_left pull-left">
+                <view class="text-left text-block font-size-15">评估结果：</view>  
+              </view>
+              <view class="card_right pull-left">
+                <view class="text-left weui-media-box__desc_1 text-block font-size-15 pinggu_jieguo">{{item.pe_result}}</view>
+
+              </view>     
+            </view>
+          </view>
+      </view>
+    </block>
+  </scroll-view>
+</swiper-item>

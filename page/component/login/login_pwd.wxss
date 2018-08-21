@@ -1,0 +1,57 @@
+/* pages/login/login.wxss */
+page{
+  height: 100%;
+  overflow-y: hidden;
+  background: #fff;
+}
+.login_box{
+  background: #fff;
+  min-height: 80vh;
+  padding-top:50rpx; 
+}
+.logo_img_box{
+  background: #fff;
+  padding-top:80rpx; 
+}
+.logo_img{
+  width:70%;
+  height: 350rpx;
+  display: block;
+  margin: 20px auto 0;
+
+}
+.line_none:before{
+    border-top: 0;
+}
+
+/* .weui-cells_form:after{
+  border-bottom: 1px solid #e6e6e6;
+} */
+.weui-vcode-btn {
+    display: inline-block;
+    height: 23px;
+    margin-left: 5px;
+    padding: inherit;
+    border-left: 0;
+    line-height: 23px;
+    vertical-align: middle;
+    font-size: 17px;
+    color: #f04748;
+    border: 0;
+    outline: none;
+}
+.yzm_btn{
+  outline: none;
+  color: #f04748;
+  border:0px;
+  background-color:transparent;
+  font-size: 24rpx;
+  padding: 3px 5px;
+}
+.weui-cells::after{
+  margin-left: 15px;
+}
+.bg-gray{
+  background: #f1f1f1;
+  color: #999;
+}

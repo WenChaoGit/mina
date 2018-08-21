@@ -1,0 +1,16 @@
+<!--pages/video/video.wxml-->
+<view class="section">
+  <video id="myVideo" src="{{video.url}}" danmu-list="{{danmuList}}" direction='90' controls autoplay></video>
+</view>
+<view class="weui-panel bg-gray line_none">
+  <view class="weui-panel__bd">
+    <view class="weui-media-box weui-media-box_appmsg">
+      <view class="weui-media-box__bd">
+        <view class="weui-media-box__title">描述说明</view>
+        <view class="mianshu_text">
+        {{video.description}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

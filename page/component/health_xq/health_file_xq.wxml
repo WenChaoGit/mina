@@ -1,0 +1,43 @@
+<!--pages/my/health/health_file_xq.wxml-->
+      <view class="weui-form-preview line_none card_radius block ml mr mt-sm mb-sm">
+          <view class="weui-form-preview__hd">
+            <view class="weui-form-preview__item text-left">
+              <image src="../../../image/pinggu_icon.png" class=" icon_a pull-left"></image>
+              <text class="ml-sm font-bold pull-left font-size-15 health_title text-red">{{info.pe_cate_id}}康复评估</text>
+            </view>
+          </view>
+          <view class="weui-form-preview__bd">
+            <view class="weui-form-preview__item mb-sm">
+              <view class="card_left pull-left">
+                <view class="text-left text-block font-size-15">评估医师：</view>
+              </view>
+              <view class="card_right pull-left">
+                <view class="text-left text-block font-size-15 text-gray">{{info.admin_id}} </view> 
+              </view>     
+            </view>
+            <view class="weui-form-preview__item mb-sm">
+              <view class="card_left pull-left">
+                <view class="text-left text-block font-size-15 ">评估时间： </view> 
+              </view>
+              <view class="card_right pull-left">
+                <view class="text-left text-block font-size-15 text-gray">{{info.created}}</view>
+              </view>     
+            </view>
+            <view class="weui-form-preview__item mb-sm">
+              <view class="card_left pull-left">
+                <view class="text-left text-block font-size-15 ">评估门店： </view> 
+              </view>
+              <view class="card_right pull-left">
+                <view class="text-left text-block font-size-15 text-gray">{{info.store_id}} </view>
+              </view>     
+            </view>
+            <view class="weui-form-preview__item mb-sm">
+              <view class="card_left pull-left">
+                <view class="text-left text-block font-size-15">评估结果：</view>  
+              </view>
+              <view class="card_right pull-left" wx:for="{{info.pe_result}}" wx:key="*this" wx:for-item="item">
+                <view class="text-gray text-left font-size-15">{{item}}</view>
+              </view>     
+            </view>
+          </view>
+      </view>

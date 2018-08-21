@@ -1,0 +1,19 @@
+<block wx:for="{{image_list}}" wx:key="*this" wx:for-item="item">
+  <view class="mb">
+    <view class="section">
+      <image src='{{item.url}}' class='imageAnwer'></image>
+    </view>
+    <view class="weui-panel bg-gray line_none mt0">
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_appmsg">
+          <view class="weui-media-box__bd">
+            <view class="weui-media-box__title">描述说明</view>
+            <view class="mianshu_text">
+              {{item.des}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>

@@ -1,0 +1,49 @@
+/* pages/yuyue/yuyue.wxss */
+
+.line_none:before{
+    border-top: 0;
+}
+.line_none:after{
+    border-bottom: 0;
+}
+.card_radius {
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.05);
+}
+
+.card_acress:after {
+  content: " ";
+  display: inline-block;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  height: 6px;
+  width: 6px;
+  border-width: 2px 2px 0 0;
+  border-color: #f04748;
+  border-style: solid;
+  margin-right: 4px;
+}
+.icon_a{
+  width: 36rpx;
+  height: 36rpx;
+}
+.dianming{
+  display: inline-block;
+  width: calc(100% - 85px);
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.scoll-h{
+  height: calc(100% - 30rpx);
+}
+navigator{
+  -webkit-tap-highlight-color: transparent;
+  -moz-tap-highlight-color: transparent;
+}
+.Sure{
+  color: #f04748;
+}
+.footer{
+  border-top: 2px solid #f1f1f1;
+}

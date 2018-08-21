@@ -1,0 +1,21 @@
+<view class='p'>
+<view class="weui-cells mt0 weui-cells_form line_none card_radius">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <view>反馈类型</view>
+        <view wx:for='{{items}}' class="checkbox {{item.checked}}" data-index="{{index}}" bindtap="checkSelected">{{item.text}}</view>
+      </view>
+    </view>
+  </view>
+<view class="weui-cells weui-cells_form line_none card_radius">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <textarea bindinput="feedbackInput" class="weui-textarea" placeholder="请输入意见反馈" value="{{content}}" rows="5" />
+            <view class="weui-textarea-counter"><span>{{content_len}}</span>/{{content_max_len}}</view>
+          </view>
+        </view>
+      </view>
+      <view  style="padding: 15px 30px">
+        <button bindtap='submitFeedback' type="button" class="weui-btn weui_btn_red_round waves block" style="margin-top: 20px;">提交</button>
+      </view>
+</view>

@@ -1,0 +1,61 @@
+<view class="weui-form-preview line_none">
+  <view class="weui-form-preview__bd" style="padding: 40rpx 0;">
+    <view class="weui-form-preview__item text-center">
+      <image src="{{avatar_url}}" class="img_round index_tx"></image>
+      <view>
+        <text class="font-size-18 text-block block">{{nickname}}</text>
+        <view bindtap='gotoUserInfo' class="text-gray block font-size-13" style="margin-top: -5px;">点击编辑资料</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="weui-cells">
+  <view class="weui-cell weui-cell_access p-lg" wx:if='{{is_userinfo}}'>
+    <view class="weui-cell__hd">
+      <image src="/image/my_icon_1.png" class='my_icon'></image>
+    </view>
+    <view class="weui-cell__bd">
+      <button class="userInfoBtn" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">授权完善信息</button>
+    </view>
+    <view class="weui-cell__ft"></view>
+  </view>
+</view>
+
+<view class="weui-cells">
+  <view bindtap='healthFile' class="weui-cell weui-cell_access p-lg">
+    <view class="weui-cell__hd">
+      <image src="/image/my_icon_1.png" class='my_icon'></image>
+    </view>
+    <view class="weui-cell__bd">
+      <view class='ml-sm font-size-15'>健康档案</view>
+    </view>
+    <view class="weui-cell__ft"></view>
+  </view>
+  <view bindtap='gotoFeedback' class="weui-cell weui-cell_access p-lg">
+    <view class="weui-cell__hd">
+      <image src="/image/my_icon_3.png" class='my_icon'></image>
+    </view>
+    <view class="weui-cell__bd">
+      <view class='ml-sm font-size-15'>意见反馈</view>
+    </view>
+    <view class="weui-cell__ft"></view>
+  </view>
+  <view bindtap='aboutUs' class="weui-cell weui-cell_access p-lg">
+    <view class="weui-cell__hd">
+      <image src="/image/my_icon_4.png" class='my_icon'></image>
+    </view>
+    <view class="weui-cell__bd">
+      <view class='ml-sm font-size-15'>关于我们</view>
+    </view>
+    <view class="weui-cell__ft"></view>
+  </view>
+  <view bindtap='logout' class="weui-cell weui-cell_access p-lg">
+    <view class="weui-cell__hd">
+      <image src="/image/logout.png" class='my_icon'></image>
+    </view>
+    <view class="weui-cell__bd">
+      <view class='ml-sm font-size-15'>退出</view>
+    </view>
+    <view class="weui-cell__ft"></view>
+  </view>
+</view>

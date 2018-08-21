@@ -1,0 +1,111 @@
+<!--index.wxml-->
+<!-- 头部  -->
+<page>
+  <view class="global-box index_title" style="width: 100%;">
+    <view class="img-box">
+      <image class="img_round" src="{{avatar_url}}"></image>
+    </view>
+    <view class="text-box">
+      <navigator hover-class='none' url='../userinfo/userinfo' class="text-white font-size-15 block">{{nickname}}</navigator>
+      <text class="text-white block font-size-14">马上训练，恢复功能水平</text>
+    </view>
+  </view>
+  <view>
+    <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+      <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">进行中</view>
+      <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">已完成</view>
+    </scroll-view>
+    
+    <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+          <view wx:if="{{ training.length==0}}">
+            <view class='indextextnone'>暂无数据~</view>
+            <image  src='../../../image/indexnone.png' class='indexnone_img'></image>
+          </view>
+          <block wx:for="{{training}}" wx:key="*this" wx:for-item="item">
+            <!-- 进行中 -->
+            <view current="1"  class="weui-form-preview view_a line_none card_radius ml mr mt-sm mb-sm">
+              <view data-no='{{item.id}}' bindtap='indexNav' class="weui-form-preview__bd">
+                <view class="weui-form-preview__item">
+                  <text class="font-size-15 pull-left text-block ">{{item.pe_cate_id}}</text>
+                  <text class="span_red_border font-size-12 ml pull-left">{{item.level_day}}天/{{item.lnum}}次</text>
+                  <text class="text-red card_acress font-size-13">查看详情 </text>
+                </view>
+                <view class="weui-form-preview__item">
+                  <view class="weui-form-preview__label font-size-12 text-gray" style="">
+                    <text class='font-size-13 text-block mr'>{{item.store_id}}</text>
+                    <text class='font-size-13 text-block'>执行人：{{item.admin_id}}</text>
+                   </view>
+                </view>
+                <view class="weui-form-preview__item mt-sm">
+                  <view class="range_box pull-left">
+                    <text class="range_active" style="width:{{item.percent}}%;"></text>
+                  </view>
+                  <text class="font-size-13 text-gray pull-left block" style="width:70px;">完成{{item.percent}}%</text>
+                </view>
+                <view class="weui-form-preview__item mt-sm">
+                  <image src="../../../image/icon_a.png" class="pull-left mt-sm icon"></image>
+                  <text class="pull-left font-size-13 ml-sm">加油！训练初见成效！</text>
+
+                </view>
+              </view>
+            </view>
+            <!-- 进行中 -->
+          </block>
+          
+        </scroll-view>
+      </swiper-item>
+      <swiper-item >
+        <scroll-view scroll-y="true" class="scoll-h">
+          <view wx:if="{{trained.length == 0}}">
+              <view class='indextextnone'>暂无数据~</view>
+              <image src='../../../image/indexnone.png' class='indexnone_img'></image>
+          </view>
+          <block wx:for="{{trained}}" wx:key="*this" wx:for-item="item">
+            <!-- 已完成 -->
+            <view current="{{item.state}}"  class="weui-form-preview view_b line_none card_radius ml mr mt-sm mb-sm" >
+              <view bindtap='indexNav' class="weui-form-preview__bd">
+                <view class="weui-form-preview__item">
+                  <text class="font-size-15 pull-left text-block ">{{item.pe_cate_id}}</text>
+                  <text class="span_red_border font-size-12 ml pull-left">{{item.level_day}}天/{{item.lnum}}次</text>
+                  <text class="text-red card_acress font-size-13">查看详情 </text>
+                </view>
+                <view class="weui-form-preview__item">
+                  <view class="weui-form-preview__label font-size-12 text-gray" style="">
+                    <text class='font-size-13 text-block mr'>{{item.store_id}}</text>
+                    <text class='font-size-13 text-block'>执行人：{{item.admin_id}}</text>
+                   </view>
+                </view>
+                <view class="weui-form-preview__item mt-sm">
+                  <view class="range_box pull-left">
+                    <text class="range_active" style="width:{{item.percent}}%;"></text>
+                  </view>
+                  <text class="font-size-13 text-gray pull-left block" style="width:70px;">完成{{item.percent}}%</text>
+                </view>
+                <view class="weui-form-preview__item mt-sm">
+                  <image src="../../../image/icon_b.png" class="pull-left mt-sm icon"></image>
+                  <text class="pull-left font-size-13 ml-sm">恭喜您完成训练计划</text>
+                  <text data-no='{{item.id}}' catchtap='showDialogBtn' class="weui-btn weui_btn_red_round waves weui_btn_mini text-middle pull-right">评价</text>
+                </view>
+              </view>
+            </view>
+            <!-- 已完成 -->
+          </block>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <i-modal visible="{{ showModal }}" actions="{{ actions }}" bind:click="handleUserRate">
+    <view class='text-left'>请您对我们做出评价：</view>
+    <view class='text-left'>
+      <i-cell>
+          <i-rate bind:change="onStar" size="40" value="{{starIndex2}}"></i-rate>
+      </i-cell>
+    </view>
+    <view class="section">
+      <textarea class='evaluate_textarea'  placeholder="" bindblur="bindTextAreaBlur"/>
+    </view>
+  </i-modal>
+</page>

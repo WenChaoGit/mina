@@ -1,0 +1,24 @@
+<view class='logo_img_box'>
+<image src='/image/logo.png' class='logo_img'></image>
+</view>
+<view class='login_box p'>
+<view class="weui-cells line_none weui-cells_form mt0">
+      <view class="weui-cell ">
+        <view class="weui-cell__bd">
+          <input class="weui-input font-size-14" name="mobile" placeholder="请输入手机号" bindinput="mobileInput" type='number' maxlength='11' value='' />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_vcode">
+        <view class="weui-cell__bd">
+        <input class="weui-input font-size-14" name="yzm"  placeholder="请输入短信验证码" bindinput="yzmInput" type='number' maxlength='6' value='' />
+        </view>
+        <view class="weui-cell__ft">
+        <!-- bg-gray -->
+          <view class='{{yzm_btn_css}}' bindtap='sendYzm'>{{yzm_btn_text}}</view>
+        </view>
+      </view>
+    </view>
+    <view  style="padding: 15px 30px">
+      <button  bindtap='loginBtn'  class="weui-btn weui_btn_red_round block waves" style="margin-top: 10vh;">登录</button>
+    </view>
+</view>

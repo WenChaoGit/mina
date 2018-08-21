@@ -1,0 +1,24 @@
+<!--pages/login/index.wxml-->
+<view class='logo_img_box'>
+<image src='/image/logo.png' class='logo_img'></image>
+</view>
+<view class='loginBox'>
+  <view style="padding:0 30px;">
+    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"  class="weui-btn weui_btn_red_round block waves" style="margin-top: 10vh;">
+    微信授权登录
+    </button>
+  </view>
+  </view>
+  <view class='otherBox'>
+    <view class='line'></view>
+    <view class='otherlogin'>其他方式登录</view>
+  </view>
+  <view class="weui-flex" style="padding:0 30px;">
+  <view class="weui-flex__item p">
+    <view class='weui_btn_plain_red weui-btn font-size-14' bindtap='toLoginByYzm'>验证码登录</view>
+  </view>
+  <view class="weui-flex__item p">
+    <view class='weui_btn_plain_red weui-btn font-size-14' bindtap='toLoginByPwd'>密码登录</view>
+  </view>
+</view>
+

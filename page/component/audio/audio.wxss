@@ -1,0 +1,33 @@
+/* pages/audio/audio.wxss */
+#myAudio{
+  border: 0;
+  width: 100%;
+  display: block;
+  height: 400rpx;
+
+}
+.video_img{
+  width: 100%;
+  opacity: 0.9;
+  height: 310rpx;
+  position:absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+.mianshu_text{
+  color: #999999;
+  font-size: 13px;
+  line-height: 1.7;
+  text-indent: 2em;
+}
+.gr-gray{
+  background: #f5f5f5;
+}
+.line_none:before {
+	border-top: 0;
+}
+
+.line_none:after {
+	border-bottom: 0;
+}

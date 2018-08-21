@@ -1,0 +1,20 @@
+<view class='logo_img_box'>
+<image src='/image/logo.png' class='logo_img'></image>
+</view>
+<view class='login_box p'>
+<view class="weui-cells line_none weui-cells_form mt0">
+      <view class="weui-cell ">
+        <view class="weui-cell__bd">
+          <input class="weui-input font-size-14" name="mobile" placeholder="请输入手机号" bindinput="mobileInput" type='number' maxlength='11' value='' />
+        </view>
+      </view>
+      <view class="weui-cell ">
+        <view class="weui-cell__bd">
+          <input class="weui-input font-size-14" name="pwd"  placeholder="请输入密码" bindinput="pwdInput" maxlength='18' value='' />
+        </view>
+      </view>
+    </view>
+    <view  style="padding: 15px 30px">
+      <button  bindtap='loginBtn'  class="weui-btn weui_btn_red_round block waves" style="margin-top: 10vh;">登录</button>
+    </view>
+</view>

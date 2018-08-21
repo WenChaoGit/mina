@@ -1,0 +1,20 @@
+/* pages/my/about_us/about_us.wxss */
+.about_box{
+  background-color: #fff;
+  min-height: 100vh;
+  padding: 10px 15px;
+}
+.abut_img{
+    width: 100%;
+    margin: 10px auto;
+    display: block;
+    max-width: 400px;
+    height: 450rpx;
+  }
+  .about_text{
+    line-height: 1.7;
+    text-indent: 2em;
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 14px;
+  }

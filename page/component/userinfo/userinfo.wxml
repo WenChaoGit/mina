@@ -1,0 +1,53 @@
+<!--page/component/userinfo/userinfo.wxml-->
+
+<view class="weui-cells">
+<view class="weui-cell p" hover-class='none'>
+    <view class="weui-cell__hd">
+      <view class='ml-sm font-size-15'>身份证号</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class=" text-right font-size-14" placeholder="请输入身份证号" bindinput="idCardInput" maxlength='18' value='{{idCard}}' />
+    </view>
+    <view class="weui-cell__ft"></view>
+  </view>
+  <view class="weui-cell p" hover-class='none'>
+    <view class="weui-cell__hd">
+      <view class='ml-sm font-size-15'>昵称</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class=" text-right font-size-14" maxlength='20' placeholder="请输入昵称" bindinput="nicknameInput" value='{{nickname}}' />
+    </view>
+    <view class="weui-cell__ft"></view>
+  </view>
+  <view class="weui-cell weui-cell_access p" bindtap='handleOpen'>
+    <view class="weui-cell__hd">
+      <view class='ml-sm font-size-15'>性别</view>
+    </view>
+    <view class="weui-cell__bd">
+      <view class='text-right font-size-14'>{{gender}}</view>
+    </view>
+    <view class="weui-cell__ft" ></view>
+  </view>
+  <view class="weui-cell weui-cell_access p">
+    <view class="weui-cell__hd">
+      <view class='ml-sm font-size-15'>出生日期</view>
+    </view>
+    <view class="weui-cell__bd">
+      <picker mode="date" value="{{date}}" start="1900-01-01" end="{{nowDate}}" bindchange="bindPickerChange">
+        <view class="picker text-right font-size-14">
+          {{date}}
+        </view>
+      </picker>
+    </view>
+    <view class="weui-cell__ft"></view>
+  </view>
+</view>
+<view style='padding:30px;'>
+  <button bindtap='saveBtn' class="weui-btn weui_btn_red_round waves block">保存</button>
+</view>
+
+<view>
+  <i-action-sheet visible="{{ selectsex }}" actions="{{ sex }}" show-cancel bind:cancel="handleCancel" bind:click="handleClickItem" />
+</view>
+
+
