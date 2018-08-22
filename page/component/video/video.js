@@ -1,75 +1,98 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../utils/api.js');
-import { VIDEO_SRC } from '../../../utils/config'
+import regeneratorRuntime from '../../../utils/runtime';//用来编译async await
+import { wxToastDuraion, errCode, msgList } from '../../../utils/config';
+const app = getApp(); //获取globalData
 
-function getRandomColor() {
-  let rgb = []
-  for (let i = 0; i < 3; ++i) {
-    let color = Math.floor(Math.random() * 256).toString(16)
-    color = color.length == 1 ? '0' + color : color
-    rgb.push(color)
-  }
-  return '#' + rgb.join('')
-}
 
 Page({
   onReady: function (res) {
-    this.videoContext = wx.createVideoContext('myVideo')
+    this.videoCtx = wx.createVideoContext('resourceVideo');
   },
-  inputValue: '',
   data: {
-    src: VIDEO_SRC,
-    resource_id:0,
-    video:[],
+    resource_id: 0,
+    video: [],
+    videoIndex:1,
+    videoCount:0,
   },
-  bindInputBlur: function (e) {
-    this.inputValue = e.detail.value
-  },
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      'resource_id': options.resource_id,
-    });
+    let { resource_id } = options;
+    let {trainResourceList} = app.globalData;
+    let videoCount = trainResourceList.length;
+    this.setData({ resource_id,videoCount });
   },
 
-  geVideoInfo: function(){
-    var that = this;
-    wx.showLoading({
-      title: '操作中...',
-    })
-    wx.request({
-      url: api.getPort(),
-      data: api.getResourceInfo(that.data.resource_id),
-      method: 'post',
-      success: function (result) {
-        let {code,msg,data:video} = api.parseResult(result);
-        if (code !== api.getSuccessCode()) {
-          wx.showToast({
-            title: msg,
-            icon: 'none',
-          })
-        } 
-        that.setData({ video });
-      },
-      fail: function ({ errMsg }) {
-        wx.showToast({
-          title: '网络连接错误！',
-          icon: 'none',
-        })
-      },
-      complete: function () {
-        wx.hideLoading()
-      }
-    });
+  async getVideoInfo() {
+    let { resource_id } = this.data;
+    let { code, msg: title, data } = await api.getResourceInfo(resource_id);
+    if (!code || code == 400) {
+      wx.showToast({ title, duration: wxToastDuraion }); return;
+    }
+    this.setData({ video: data })
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.geVideoInfo();
+    this.getVideoInfo();
   },
+  onTimeUpdate: function (e) {
+    let time = e.detail.currentTime;
+    if (String(time).startsWith('5')) {
+      // this.videoCtx.pause();
+    }
+    // setTimeout(() => {
+    //   this.videoCtx.play()
+    // }, 1000*60);
+    // this.videoCtx.play(); 
+
+  },
+  /**
+   * @desc 视频播放完成后操作,继续播放,或者弹窗训练完成提示
+   * @param {*} e
+   * @return mixed 
+   */
+  async onVideoEnd(e) {
+    let { type } = e; //判断视频是否播完
+    let { trainResourceList,peOrderId } = app.globalData;
+    if(!trainResourceList && !peOrderId){
+      wx.showToast({title:'抱歉,出现了一个错误'});return;
+    }
+    let videoIndex = this.data.videoIndex;
+    if (type == 'ended') {
+      //继续播放下一个视频,获取下一个资源的id,请求数据回来
+      if (videoIndex >= trainResourceList.length) {
+        //服务器记录用户训练情况
+        let { code, msg } = await api.updateUserTrainLog({ trainResourceList, peOrderId});
+        if (!code || code == errCode){
+          wx.showToast({
+            title: msgList['train_update_fail'],
+            duration: wxToastDuraion
+          });return;
+        }
+        wx.showToast({
+          title: msgList['train_completed'],
+          duration: wxToastDuraion
+        });
+        // 本次训练结束,返回训练列表
+        wx.navigateTo({
+          url: `/page/component/train/train?pe_order_id=${peOrderId}`
+        });
+      } else {
+        // 播放下一个视频
+        wx.showToast({ title: '正在为您切换下一个视频', duration: wxToastDuraion });
+        let { code, msg: title, data: video } = await api.getResourceInfo(trainResourceList[videoIndex]);
+        if (!code || code == errCode) {
+          wx.showToast({ title, duration: wxToastDuraion }); return;
+        }
+        videoIndex += 1;
+        this.setData({ video,videoIndex });
+      }
+    }
+  }
 })

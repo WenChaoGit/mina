@@ -18,3 +18,9 @@
 .line_none:after {
 	border-bottom: 0;
 }
+.current-video-num{
+  line-height: 1.5;
+  text-align: right;
+  font-size:20rpx;
+  padding-right: 20rpx;
+}

@@ -3,4 +3,10 @@ export const RESOURCE_TYPE_AUDIO = 2;//音频
 export const RESOURCE_TYPE_PICTURE = 3;//图片
 
 //小程序中video组件的src地址
-export const VIDEO_SRC = 'http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400';
+export const wxToastDuraion = 2000;
+export const errCode = 400;
+
+export const msgList ={
+    'train_completed':'棒,本次训练视频已经全部完成~',
+    'train_update_fail':'训练记录更新失败'
+}

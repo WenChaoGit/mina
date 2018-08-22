@@ -1,10 +1,11 @@
 const util = require('../../../utils/util.js');
 const  api = require('../../../utils/api.js');
 const session = require('../../../utils/session')
-import { RESOURCE_TYPE_VIDEO } from '../../../utils/config'
-import { Http } from "../../../utils/http";
+import { RESOURCE_TYPE_VIDEO, errCode } from '../../../utils/config'
+import regeneratorRuntime from '../../../utils/runtime'; //用来编译async await
+
 let app = getApp();
-const http = new Http()
+
 Page({
 
     /**
@@ -44,71 +45,28 @@ Page({
         let { pe_order_id } = options;
         this.setData({pe_order_id});
     },
-
-    getOneTrain() {
-        wx.showLoading({
-            title: '操作中...',
-        })
-        wx.request({
-            url: api.getPort(),
-            data: api.getOneTrainInfo(this.data.pe_order_id),
-            method: 'post',
-            success:result => {
-                let d = api.parseResult(result);
-                if (d.code == api.getSuccessCode()) {
-                    let {trainlist,level,pe_result} = d.data;
-                    this.setData({ trainlist, level, pe_result });
-                } else {
-                    wx.showToast({
-                        title: d.msg,
-                        icon: 'none',
-                    })
-                }
-            },
-            fail: function({ errMsg }) {
-                wx.showToast({
-                    title: '网络连接错误！',
-                    icon: 'none',
-                })
-            },
-            complete: function() {
-                wx.hideLoading()
-            }
-        });
+    async getOneTrain() {
+        let { pe_order_id } = this.data;
+        let {code,msg:title,data} = await api.getOneTrainInfo({pe_order_id});
+        if(!code || code ==errCode){
+            wx.showToast({title});return;
+        }
+        let { trainlist, level, pe_result } = data;
+        this.setData({ trainlist, level, pe_result });       
     },
-
-    startTrain(){
+    async startTrain(){
         let { trainlist,pe_order_id } = this.data;
         let {id:user_id} = session.getUserInfo(); 
-        wx.showLoading({title: '正在加载...'});
-        wx.request({
-            url: api.getPort(),
-            data: api.getResourceUrl(trainlist, pe_order_id,user_id),
-            method: 'post',
-            success: result => {
-                let { code,msg,data } = api.parseResult(result);
-                if (code == api.getSuccessCode()) {
-                   // 把请求的资源列表放到全局对象 gloalData中,这样可以在video页面使用
-                    app.globalData.train_video_list = data;
-                } else {
-                    wx.showToast({
-                        title: msg,
-                        icon: 'none',
-                    })
-                }
-                
-            },
-            fail: function({ errMsg }) {
-                wx.showToast({
-                    title: '网络连接错误！',
-                    icon: 'none',
-                })
-            },
-            complete: function() {
-                wx.hideLoading()
-            }
+        let {code,msg,data} =  await api.getResourceUrl({trainlist,pe_order_id,user_id});
+        if ( !code || code == 400) {
+            wx.showToast({title:msg,icon:'none',duration:2000});return;
+        }
+        // 把数据存放到app的globalData中   
+        app.globalData.trainResourceList = data;
+        app.globalData.peOrderId = pe_order_id;
+        wx.navigateTo({
+            url: `/page/component/video/video?resource_id=${data[0]}`
         });
-    
     },
 
     /**

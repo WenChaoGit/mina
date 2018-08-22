@@ -1,27 +1,32 @@
 var escape = require('escape.js');
 var session = require('session.js');
+import { Http } from '../utils/http';
+const http = new Http();
 
 const port = "https://omoapi.yuanxinkangfu.com/mina/user/api.html"; //接口地址
 // const port = "https://omotest.yuanxinkangfu.com/mina/user/api.html"; //接口地址
 const success_code            = 200; //接口返回成功code
 const session_id_err          = 1000; //session id不正确
-const action_test             = '10000'; //测试接口
-const action_yzm              = '10003'; //验证码
-const action_login            = '10001'; //注册登录
-const action_update_user_info = '10002'; //修改用户信息
-const action_feedback         = '10004'; //用户反馈
-const action_health           = '10005'; //健康档案
-const action_one_health       = '10006'; //查看单个健康档案
-const action_train_list       = '10007'; //训练列表
-const action_one_train        = '10008'; //单个训练详情
-const action_one_resource     = '10009'; //单个资源详情
-const action_phone_number     = '10010'; //解密手机号
-const action_session_key      = '10011'; //获取用户session_key
-const action_order_feedback   = '10012'; //对某次康复进行评价
-const action_set_userinfo   = '10013'; //用户授权设置userinfo
-const action_get_resourceurl   = '10014'; //获取所有资源url
 
 
+
+const actionCode = {
+  yzm                : 10003, //验证码
+  login              : 10001, //注册登录
+  updateUserInfo     : 10002, //修改用户信息
+  feedback           : 10004, //用户反馈
+  health             : 10005, //健康档案
+  oneHealth          : 10006, //查看单个健康档案
+  trainList          : 10007, //训练列表
+  oneTrain           : 10008, //单个训练详情
+  resourceDetail     : 10009,//单个资源详情
+  phoneNumber        : 10010, //解密手机号
+  sessionKey         : 10011, //获取用户session_key
+  orderFeedback      : 10012, //对某次康复进行评价
+  setUserinfo        : 10013, //用户授权设置userinfo
+  getResourceurl     : 10014, //获取所有资源url
+  updateUserTrainLog : 10015,
+}
 /**
  * 接口地址
  */
@@ -84,7 +89,7 @@ function initData(act, data) {
  */
 function testCN(name) {
   let data = { 'name': escape.encode(name) };
-  return initData(action_yzm, data);
+  return initData(actionCode['yzm'], data);
 }
 
 /**
@@ -92,7 +97,7 @@ function testCN(name) {
  */
 function getSessionKey(code) {
   let data = { 'code': code };
-  return initData(action_session_key, data);
+  return initData(actionCode['sessionKey'], data);
 }
 
 /**
@@ -101,7 +106,7 @@ function getSessionKey(code) {
 function getYzm(mobile) {
   let data = {'mobile': mobile};
 
-  return initData(action_yzm, data);
+  return initData(actionCode['yzm'], data);
 }
 
 /**
@@ -113,7 +118,7 @@ function getYzm(mobile) {
  */
 function getLogin(mobile, code, t) {
   let data = { mobile,code,t};
-  return initData(action_login, data);
+  return initData(actionCode['login'], data);
 }
 
 /**
@@ -121,7 +126,7 @@ function getLogin(mobile, code, t) {
  */
 function getOauthLogin(userinfo) {
   let data = userinfo;
-  return initData(action_login, data);
+  return initData(actionCode['login'], data);
 }
 
 /**
@@ -136,7 +141,7 @@ function getUpdateUserInfo(id_card_no, gender, birthday, nickname) {
     nickname
   };
   
-  return initData(action_update_user_info, data);
+  return initData(actionCode['updateUserInfo'], data);
 }
 
 /**
@@ -146,7 +151,7 @@ function getHealthInfo() {
   let data = {
     
   };
-  return initData(action_health, data);
+  return initData(actionCode['health'], data);
 }
 
 /**
@@ -157,7 +162,7 @@ function setUserInfo(userinfo,mobile) {
     'userinfo' : userinfo,
     'mobile' : mobile,
   };
-  return initData(action_set_userinfo, data);
+  return initData(action['setUserinfo'], data);
 }
 
 /**
@@ -167,7 +172,7 @@ function getOneHealthInfo(pe_order_id) {
   let data = {
     'pe_order_id' : pe_order_id,
   };
-  return initData(action_one_health, data);
+  return initData(actionCode['oneHealth'], data);
 }
 
 /**
@@ -177,50 +182,35 @@ function getTrainListInfo() {
   let data = {
     
   };
-  return initData(action_train_list, data);
+  return initData(actionCode['trainList'], data);
 }
 
 /**
  * 对某次康复评价
  */
 function setOderFeedback(pe_order_id) {
-  return initData(action_order_feedback, pe_order_id);
+  return initData(actionCode['orderFeedback'], pe_order_id);
 }
 
 /**
  * 获取一个训练计划
  */
-function getOneTrainInfo(pe_order_id) {
-  let data = {
-    'pe_order_id' : pe_order_id,
-  };
-  return initData(action_one_train, data);
-}
-
-/**
- * 点击开始训练获取所有视频url并判断当天是否已经点击过一次
- */
-function getResourceUrl(trainlist,pe_order_id,user_id) {
-  let data = {trainlist, pe_order_id,user_id};
-  return initData(action_get_resourceurl, data);
+function getOneTrainInfo({pe_order_id}) {
+  http._showLoading();
+  let action = actionCode['oneTrain'];
+  let result = http.request({ data: { pe_order_id }, action });
+  http._hideLoading()
+  return result;
 }
 
 /**
  * 手机号授权 - 解密手机号
  */
 function getPhoneNumber(data) {
-  return initData(action_phone_number, data);
+  return initData(actionCode['phoneNumber'], data);
 }
 
-/**
- * 获取某资源
- */
-function getResourceInfo(resource_id) {
-  let data = {
-    'resource_id' : resource_id,
-  };
-  return initData(action_one_resource, data);
-}
+
 
 /**
  * 意见反馈
@@ -231,30 +221,71 @@ function getFeedback(content, ids) {
     'ids': ids
   };
 
-  return initData(action_feedback, data);
+  return initData(actionCode['feedback'], data);
+}
+/**
+ * @action 1009 
+ * @desc 获取单个资源的url和描述,训练次数
+ * @return promise
+ */
+function getResourceInfo(resource_id) {
+  http._showLoading();
+  let action = actionCode['resourceDetail'];
+  let result = http.request({data:{resource_id},action});
+  http._hideLoading()
+  return result;
 }
 
+/**
+ * @action 10014
+ * @desc 点击开始训练
+ * @param 
+ */
+function getResourceUrl({trainlist,pe_order_id,user_id}){
+  http._showLoading();
+  let data = { trainlist, pe_order_id, user_id };
+  let action = actionCode['getResourceurl'];
+  let result =  http.request({data,action});
+  http._hideLoading();
+  return result;
+}
 
-
+/**
+ * @action 10015
+ * @desc 更新训练记录
+ * @param array trainResourceList
+ * @param int peOrderId 康复方案的id,用来查询用户的训练记录
+ * @return promise 
+ */
+function updateUserTrainLog({ trainResourceList,peOrderId}){
+  http._showLoading();
+  let data = { trainResourceList, peOrderId };
+  let action = actionCode['updateUserTrainLog'];
+  let result = http.request({ data, action });
+  http._hideLoading();
+  return result;
+}
 
 module.exports = {
-  parseResult      : parseResult,
-  getSuccessCode   : getSuccessCode,
-  getPort          : getPort,
-  getYzm           : getYzm,
-  getLogin         : getLogin,
-  getUpdateUserInfo: getUpdateUserInfo,
-  getFeedback      : getFeedback,
-  getHealthInfo    : getHealthInfo,
-  getOneHealthInfo : getOneHealthInfo ,
-  getTrainListInfo : getTrainListInfo ,
-  getOneTrainInfo  : getOneTrainInfo ,
-  getResourceInfo  : getResourceInfo ,
-  getOauthLogin    : getOauthLogin ,
-  getPhoneNumber   : getPhoneNumber ,
-  getSessionKey    : getSessionKey ,
-  setOderFeedback  : setOderFeedback ,
-  setUserInfo      : setUserInfo ,
-  getResourceUrl   : getResourceUrl ,
+  parseResult,
+  getSuccessCode,
+  getPort,
+  getYzm,
+  getLogin ,
+  getUpdateUserInfo,
+  getFeedback ,
+  getHealthInfo ,
+  getOneHealthInfo ,
+  getTrainListInfo ,
+  getOneTrainInfo ,
+  getResourceInfo , 
+  getOauthLogin , 
+  getPhoneNumber,   
+  getSessionKey ,   
+  setOderFeedback , 
+  setUserInfo ,
+  //训练
+  getResourceUrl ,
+  updateUserTrainLog,
 }
 
