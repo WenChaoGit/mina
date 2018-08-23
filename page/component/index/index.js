@@ -1,5 +1,7 @@
 var session = require('../../../utils/session.js');
 var api = require('../../../utils/api.js');
+import regeneratorRuntime from '../../../utils/runtime'; //用来编译async await
+import { errCode } from '../../../utils/config.js';
 var app = getApp();
 
 Page({
@@ -41,46 +43,26 @@ Page({
     })
   },
   indexNav: function (e) {
+    let { no } = e.currentTarget.dataset;
+    if (!no){
+      wx.showToast({title:'参数异常'});return;
+    }
     wx.navigateTo({
-      url: '/page/component/train/train?pe_order_id='+e.currentTarget.dataset.no,
+      url: `/page/component/train/train?pe_order_id=${no}`,
     });
   },
 
-  setInfo: function(){
-    var that = this;
-    wx.showLoading({
-      title: '操作中...',
-    })
-    wx.request({
-      url: api.getPort(),
-      data: api.getTrainListInfo(),
-      method: 'post',
-      success: function (result) {
-        let d = api.parseResult(result);
-        if (d.code == api.getSuccessCode()) {
-          console.log(d.data)
-          that.setData({
-            'training': d.data.training,
-            'trained': d.data.trained,
-          });
-        } else {
-          wx.showToast({
-            title: d.msg,
-            icon: 'none',
-          })
-        }
-      },
-      fail: function ({ errMsg }) {
-        console.log(errMsg);
-        wx.showToast({
-          title: '网络连接错误！',
-          icon: 'none',
-        })
-      },
-      complete: function () {
-        wx.hideLoading()
-      }
-    });
+  /**
+   * @action 10007
+   * @desc 获取用户的所有的训练列表包括进行中的,和已完成的
+   */
+  async setInfo(){
+    let { code, msg:title, data } = await api.getTrainListInfo();
+    if (!code || code == errCode){
+      wx.showToast({title});return;
+    }
+    let { training,trained } = data;
+    this.setData({ training, trained});
   },
 
   // 弹出评价

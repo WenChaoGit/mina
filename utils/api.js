@@ -6,26 +6,26 @@ const http = new Http();
 const port = "https://omoapi.yuanxinkangfu.com/mina/user/api.html"; //接口地址
 // const port = "https://omotest.yuanxinkangfu.com/mina/user/api.html"; //接口地址
 // const port = "http://app.omo.com/mina/user/api.html?XDEBUG_SESSION_START=19193"; //接口地址
-const success_code            = 200; //接口返回成功code
-const session_id_err          = 1000; //session id不正确
+const success_code = 200; //接口返回成功code
+const session_id_err = 1000; //session id不正确
 
 
 const actionCode = {
-  yzm                : 10003, //验证码
-  login              : 10001, //注册登录
-  updateUserInfo     : 10002, //修改用户信息
-  feedback           : 10004, //用户反馈
-  health             : 10005, //健康档案
-  oneHealth          : 10006, //查看单个健康档案
-  trainList          : 10007, //训练列表
-  oneTrain           : 10008, //单个训练详情
-  resourceDetail     : 10009,//单个资源详情
-  phoneNumber        : 10010, //解密手机号
-  sessionKey         : 10011, //获取用户session_key
-  orderFeedback      : 10012, //对某次康复进行评价
-  setUserinfo        : 10013, //用户授权设置userinfo
-  getResourceurl     : 10014, //获取所有资源url
-  updateUserTrainLog : 10015, //更新用户训练记录
+  yzm: 10003, //验证码
+  login: 10001, //注册登录
+  updateUserInfo: 10002, //修改用户信息
+  feedback: 10004, //用户反馈
+  health: 10005, //健康档案
+  oneHealth: 10006, //查看单个健康档案
+  trainList: 10007, //训练列表
+  oneTrain: 10008, //单个训练详情
+  resourceDetail: 10009,//单个资源详情
+  phoneNumber: 10010, //解密手机号
+  sessionKey: 10011, //获取用户session_key
+  orderFeedback: 10012, //对某次康复进行评价
+  setUserinfo: 10013, //用户授权设置userinfo
+  getResourceurl: 10014, //获取所有资源url
+  updateUserTrainLog: 10015, //更新用户训练记录
 }
 /**
  * 接口地址
@@ -56,7 +56,7 @@ function parseResult(result) {
     msg = '异常错误！';
     data = null;
   }
-  
+
   if (code === session_id_err) {
     // session_id或者uid不正确时跳转到登录页面
     session.logout();
@@ -64,7 +64,7 @@ function parseResult(result) {
       url: '/page/component/login/index',
     })
   }
-  return { code,msg,data };
+  return { code, msg, data };
 }
 
 /**
@@ -74,12 +74,12 @@ function initData(act, data) {
   //{"head":{"action":"10000"},"data":{"mobile":"13581568689"}}
   let head = null;
   if (session.isLogin()) {
-    let { id,mobile,session_id } = session.getUserInfo();
-    head = { 'action': act, id, mobile, session_id};
+    let { id, mobile, session_id } = session.getUserInfo();
+    head = { 'action': act, id, mobile, session_id };
   } else {
-    head ={ 'action': act };
+    head = { 'action': act };
   }
-  let json = {head,data};
+  let json = { head, data };
   console.log(JSON.stringify(json));
   return JSON.stringify(json);
 }
@@ -96,7 +96,7 @@ function testCN(name) {
  * 获取用户session_key
  */
 function getSessionKey(code) {
-  let data = { 'code': code };
+  let data = { code };
   return initData(actionCode['sessionKey'], data);
 }
 
@@ -104,7 +104,7 @@ function getSessionKey(code) {
  * 获取验证码
  */
 function getYzm(mobile) {
-  let data = {'mobile': mobile};
+  let data = { mobile };
 
   return initData(actionCode['yzm'], data);
 }
@@ -117,7 +117,7 @@ function getYzm(mobile) {
  * t->3手机号+密码
  */
 function getLogin(mobile, code, t) {
-  let data = { mobile,code,t};
+  let data = { mobile, code, t };
   return initData(actionCode['login'], data);
 }
 
@@ -134,13 +134,7 @@ function getOauthLogin(userinfo) {
  * gender：1男，2女
  */
 function getUpdateUserInfo(id_card_no, gender, birthday, nickname) {
-  let data = {
-    id_card_no,
-    gender,
-    birthday,
-    nickname
-  };
-  
+  let data = { id_card_no, gender, birthday, nickname };
   return initData(actionCode['updateUserInfo'], data);
 }
 
@@ -148,20 +142,15 @@ function getUpdateUserInfo(id_card_no, gender, birthday, nickname) {
  * 初始化健康档案接口数据
  */
 function getHealthInfo() {
-  let data = {
-    
-  };
+  let data = {};
   return initData(actionCode['health'], data);
 }
 
 /**
  * 用户授权获取userinfo
  */
-function setUserInfo(userinfo,mobile) {
-  let data ={
-    'userinfo' : userinfo,
-    'mobile' : mobile,
-  };
+function setUserInfo(userinfo, mobile) {
+  let data = { userinfo, mobile };
   return initData(action['setUserinfo'], data);
 }
 
@@ -169,20 +158,20 @@ function setUserInfo(userinfo,mobile) {
  * 获取单个健康档案数据
  */
 function getOneHealthInfo(pe_order_id) {
-  let data = {
-    'pe_order_id' : pe_order_id,
-  };
+  let data = { pe_order_id };
   return initData(actionCode['oneHealth'], data);
 }
 
 /**
- * 获取训练计划列表
+ * @action 10007
+ * @desc 获取训练计划列表
  */
 function getTrainListInfo() {
-  let data = {
-    
-  };
-  return initData(actionCode['trainList'], data);
+  http._showLoading()
+  let action = actionCode['trainList']
+  let result = http.request({ data: {}, action })
+  http._hideLoading()
+  return result
 }
 
 /**
@@ -195,7 +184,7 @@ function setOderFeedback(pe_order_id) {
 /**
  * 获取一个训练计划
  */
-function getOneTrainInfo({pe_order_id}) {
+function getOneTrainInfo({ pe_order_id }) {
   http._showLoading();
   let action = actionCode['oneTrain'];
   let result = http.request({ data: { pe_order_id }, action });
@@ -210,17 +199,11 @@ function getPhoneNumber(data) {
   return initData(actionCode['phoneNumber'], data);
 }
 
-
-
 /**
  * 意见反馈
  */
 function getFeedback(content, ids) {
-  let data = {
-    'content': content,
-    'ids': ids
-  };
-
+  let data = { content, ids };
   return initData(actionCode['feedback'], data);
 }
 /**
@@ -231,7 +214,7 @@ function getFeedback(content, ids) {
 function getResourceInfo(resource_id) {
   http._showLoading();
   let action = actionCode['resourceDetail'];
-  let result = http.request({data:{resource_id},action});
+  let result = http.request({ data: { resource_id }, action });
   http._hideLoading()
   return result;
 }
@@ -241,12 +224,11 @@ function getResourceInfo(resource_id) {
  * @desc 点击开始训练
  * @param 
  */
-function getResourceUrl({trainlist,pe_order_id,user_id}){
-  
+function getResourceUrl({ trainlist, pe_order_id, user_id }) {
   http._showLoading();
   let data = { trainlist, pe_order_id, user_id };
   let action = actionCode['getResourceurl'];
-  let result =  http.request({data,action});
+  let result = http.request({ data, action });
   http._hideLoading();
   return result;
 }
@@ -258,7 +240,7 @@ function getResourceUrl({trainlist,pe_order_id,user_id}){
  * @param int peOrderId 康复方案的id,用来查询用户的训练记录
  * @return promise 
  */
-function updateUserTrainLog({ trainResourceList,peOrderId}){
+function updateUserTrainLog({ trainResourceList, peOrderId }) {
   http._showLoading();
   let data = { trainResourceList, peOrderId };
   let action = actionCode['updateUserTrainLog'];
@@ -272,21 +254,21 @@ module.exports = {
   getSuccessCode,
   getPort,
   getYzm,
-  getLogin ,
+  getLogin,
   getUpdateUserInfo,
-  getFeedback ,
-  getHealthInfo ,
-  getOneHealthInfo ,
-  getTrainListInfo ,
-  getOneTrainInfo ,
-  getResourceInfo , 
-  getOauthLogin , 
-  getPhoneNumber,   
-  getSessionKey ,   
-  setOderFeedback , 
-  setUserInfo ,
+  getFeedback,
+  getHealthInfo,
+  getOneHealthInfo,
+  getTrainListInfo,
+  getOneTrainInfo,
+  getResourceInfo,
+  getOauthLogin,
+  getPhoneNumber,
+  getSessionKey,
+  setOderFeedback,
+  setUserInfo,
   //训练
-  getResourceUrl ,
+  getResourceUrl,
   updateUserTrainLog,
 }
 

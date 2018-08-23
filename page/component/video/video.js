@@ -6,9 +6,6 @@ const app = getApp(); //获取globalData
 
 
 Page({
-  onReady: function (res) {
-    this.videoCtx = wx.createVideoContext('resourceVideo');
-  },
   data: {
     resource_id: 0,
     video: [],
@@ -21,7 +18,9 @@ Page({
         color: '#f04b49'
       }
     ],
-    isComplete: false,
+  },
+  onReady: function () {
+    this.videoCtx = wx.createVideoContext('resourceVideo');
   },
 
   /**
@@ -33,7 +32,12 @@ Page({
     let videoCount = trainResourceList.length;
     this.setData({ resource_id, videoCount });
   },
-
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.getVideoInfo();
+  },
   async getVideoInfo() {
     let { resource_id } = this.data;
     let { code, msg: title, data } = await api.getResourceInfo(resource_id);
@@ -72,11 +76,8 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面显示
+   * 视频播放快要结束时,如果有训练分钟的要求,那么快要结束的时候就暂停视频
    */
-  onShow: function () {
-    this.getVideoInfo();
-  },
   onTimeUpdate: function (e) {
     let time = e.detail.currentTime;
     if (String(time).startsWith('5')) {
