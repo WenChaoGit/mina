@@ -12,8 +12,16 @@ Page({
   data: {
     resource_id: 0,
     video: [],
-    videoIndex:1,
-    videoCount:0,
+    videoIndex: 1,
+    videoCount: 0,
+    modalTrainCompleteSwitch: false,
+    modalButton: [
+      {
+        name: '返回训练列表',
+        color: '#f04b49'
+      }
+    ],
+    isComplete: false,
   },
 
   /**
@@ -21,9 +29,9 @@ Page({
    */
   onLoad: function (options) {
     let { resource_id } = options;
-    let {trainResourceList} = app.globalData;
+    let { trainResourceList } = app.globalData;
     let videoCount = trainResourceList.length;
-    this.setData({ resource_id,videoCount });
+    this.setData({ resource_id, videoCount });
   },
 
   async getVideoInfo() {
@@ -33,6 +41,34 @@ Page({
       wx.showToast({ title, duration: wxToastDuraion }); return;
     }
     this.setData({ video: data })
+  },
+
+  /**
+   * @action 10015
+   * @desc 训练完成后,用户点击返回训练列表
+   * @return mixed
+   */
+  async confirmTrainComplete() {
+    let { trainResourceList, peOrderId } = app.globalData;
+    if (!trainResourceList && !peOrderId) {
+      wx.showToast({ title: '抱歉,出现了一个错误' }); return;
+    }
+    let { code, msg } = await api.updateUserTrainLog({ trainResourceList, peOrderId });
+    if (!code || code == errCode) {
+      wx.showToast({
+        title: msgList['train_update_fail'],
+        duration: wxToastDuraion
+      }); return;
+    }
+    wx.showToast({
+      title: msgList['train_completed'],
+      duration: wxToastDuraion
+    });
+    // 本次训练结束,返回训练列表
+    wx.navigateTo({
+      url: `/page/component/train/train?pe_order_id=${peOrderId}`
+    });
+
   },
 
   /**
@@ -59,30 +95,16 @@ Page({
    */
   async onVideoEnd(e) {
     let { type } = e; //判断视频是否播完
-    let { trainResourceList,peOrderId } = app.globalData;
-    if(!trainResourceList && !peOrderId){
-      wx.showToast({title:'抱歉,出现了一个错误'});return;
+    let { trainResourceList, peOrderId } = app.globalData;
+    if (!trainResourceList && !peOrderId) {
+      wx.showToast({ title: '抱歉,出现了一个错误' }); return;
     }
     let videoIndex = this.data.videoIndex;
     if (type == 'ended') {
       //继续播放下一个视频,获取下一个资源的id,请求数据回来
       if (videoIndex >= trainResourceList.length) {
-        //服务器记录用户训练情况
-        let { code, msg } = await api.updateUserTrainLog({ trainResourceList, peOrderId});
-        if (!code || code == errCode){
-          wx.showToast({
-            title: msgList['train_update_fail'],
-            duration: wxToastDuraion
-          });return;
-        }
-        wx.showToast({
-          title: msgList['train_completed'],
-          duration: wxToastDuraion
-        });
-        // 本次训练结束,返回训练列表
-        wx.navigateTo({
-          url: `/page/component/train/train?pe_order_id=${peOrderId}`
-        });
+        //显示训练完成的弹窗
+        this.setData({ modalTrainCompleteSwitch: true })
       } else {
         // 播放下一个视频
         wx.showToast({ title: '正在为您切换下一个视频', duration: wxToastDuraion });
@@ -91,7 +113,7 @@ Page({
           wx.showToast({ title, duration: wxToastDuraion }); return;
         }
         videoIndex += 1;
-        this.setData({ video,videoIndex });
+        this.setData({ video, videoIndex });
       }
     }
   }

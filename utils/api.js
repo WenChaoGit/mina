@@ -5,9 +5,9 @@ const http = new Http();
 
 const port = "https://omoapi.yuanxinkangfu.com/mina/user/api.html"; //接口地址
 // const port = "https://omotest.yuanxinkangfu.com/mina/user/api.html"; //接口地址
+// const port = "http://app.omo.com/mina/user/api.html?XDEBUG_SESSION_START=19193"; //接口地址
 const success_code            = 200; //接口返回成功code
 const session_id_err          = 1000; //session id不正确
-
 
 
 const actionCode = {
@@ -25,7 +25,7 @@ const actionCode = {
   orderFeedback      : 10012, //对某次康复进行评价
   setUserinfo        : 10013, //用户授权设置userinfo
   getResourceurl     : 10014, //获取所有资源url
-  updateUserTrainLog : 10015,
+  updateUserTrainLog : 10015, //更新用户训练记录
 }
 /**
  * 接口地址
@@ -242,6 +242,7 @@ function getResourceInfo(resource_id) {
  * @param 
  */
 function getResourceUrl({trainlist,pe_order_id,user_id}){
+  
   http._showLoading();
   let data = { trainlist, pe_order_id, user_id };
   let action = actionCode['getResourceurl'];

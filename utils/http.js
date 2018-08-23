@@ -23,6 +23,7 @@ class Http {
           header,
           data:this._reqData(action,data),
           success: result =>{
+            console.log(result)
             if(String(result.statusCode).startsWith('2')){
               let code = parseInt(result.data.head.code) || -999;
               let msg = result.data.head.msg || '异常错误！';
@@ -84,7 +85,6 @@ class Http {
   }
 
   _errHandler(msg){
-    console.log(msg);
     wx.showToast({
       title:msg,
       icon:'none',

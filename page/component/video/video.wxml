@@ -25,3 +25,6 @@
     </view>
   </view>
 </view>
+<i-modal title="本次训练已完成" visible="{{ modalTrainCompleteSwitch }}" actions="{{ modalButton }}" bind:click="confirmTrainComplete">
+ <view>棒,继续加油哦~</view>
+</i-modal>
