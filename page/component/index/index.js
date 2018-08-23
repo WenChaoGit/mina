@@ -27,18 +27,18 @@ Page({
     starIndex4: 4,  //星星4
     starIndex5: 5,  //星星5
     actions: [
-      {name: '取消'},
-      {name: '提交',color: '#f04748'}
+      { name: '取消' },
+      { name: '提交', color: '#f04748' }
     ],
   },
-  onStar(e) {
-    const index = e.detail.index;
+  onStar({ detail }) {
+    const index = detail.index;
     this.setData({
       'starIndex2': index
     })
   },
-  indexNav: function (e) {
-    let { no } = e.currentTarget.dataset;
+  indexNav: function ({ currentTarget }) {
+    let { no } = currentTarget.dataset;
     if (!no) {
       wx.showToast({ title: '参数异常' }); return;
     }
@@ -61,10 +61,10 @@ Page({
   },
 
   // 弹出评价
-  showDialogBtn: function (e) {
+  showDialogBtn: function ({ currentTarget }) {
     this.setData({
       showModal: true,
-      feedback_order_id: e.currentTarget.dataset.no,
+      feedback_order_id: currentTarget.dataset.no,
     })
   },
   /**
@@ -77,6 +77,7 @@ Page({
   /**
    * @action 10012
    * @desc 对某个已完成的康复方案进行评价
+   * @param {小程序事件对象event中的detail} detail
    * @return mixed
    */
   async handleUserRate({ detail }) {
@@ -97,22 +98,26 @@ Page({
     }
   },
 
-  bindTextAreaBlur: function (e) {
+  /**
+   * @desc ''
+   * @param {小程序事件对象event中的detail} detail
+   */
+  bindTextAreaBlur: function ({ detail }) {
     this.setData({
-      feedback_content: e.detail.value
+      feedback_content: detail.value
     });
   },
 
   // 滚动切换标签样式
-  switchTab: function (e) {
+  switchTab: function ({ detail }) {
     this.setData({
-      currentTab: e.detail.current
+      currentTab: detail.current
     });
     this.checkCor();
   },
   // 点击标题切换当前页时改变样式
-  swichNav: function (e) {
-    var cur = e.target.dataset.current;
+  swichNav: function ({ target }) {
+    var cur = target.dataset.current;
     if (this.data.currentTaB == cur) { return false; }
     else {
       this.setData({
@@ -141,7 +146,7 @@ Page({
           clientWidth = res.windowWidth,
           rpxR = 750 / clientWidth;
         var calc = clientHeight * rpxR - 320;
-        that.setData({winHeight: calc});
+        that.setData({ winHeight: calc });
       }
     });
   },

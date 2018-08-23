@@ -163,6 +163,8 @@ function getOneHealthInfo(pe_order_id) {
 /**
  * @action 10007
  * @desc 获取训练计划列表
+ * @param {无需参数}
+ * @return promise
  */
 function getTrainListInfo() {
   http._showLoading()
