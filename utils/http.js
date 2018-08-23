@@ -12,10 +12,18 @@ const codeList = {
 };
 class Http {
   request({ data, action = '',url='',method='POST',header={'content_type':'application/json'} }){
-    return this._request(data,action,url,method,header)
+    return this._request(data,action,method,header)
   }
 
-  _request(data,action,url,method,header){
+  /**
+   * @desc  把微信原生的请求改造成promise,最后返回一个promise
+   * @param {请求数据} data 
+   * @param {请求action} action 
+   * @param {请求方法,默认为get} method 
+   * @param {请求头的content-type:默认为application/json} header
+   * @return promise 
+   */
+  _request(data,action,method,header){
     return new Promise( (resolve,reject)=>{
         wx.request({
           url: this._getPort(),
@@ -23,7 +31,6 @@ class Http {
           header,
           data:this._reqData(action,data),
           success: result =>{
-            console.log(result)
             if(String(result.statusCode).startsWith('2')){
               let code = parseInt(result.data.head.code) || -999;
               let msg = result.data.head.msg || '异常错误！';

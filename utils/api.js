@@ -42,7 +42,6 @@ function getSuccessCode() {
  * 解析返回结果
  */
 function parseResult(result) {
-  console.log(result);
   let code = -999;
   let msg = '异常错误！'
   let data = null;
@@ -51,7 +50,6 @@ function parseResult(result) {
     msg = result.data.head.msg;
     data = result.data.data;
   } catch (e) {
-    console.log(e)
     code = -999;
     msg = '异常错误！';
     data = null;
@@ -177,6 +175,7 @@ function getTrainListInfo() {
 /**
  * @action 10012
  * @desc 对某次已完成的康复方案进行评价
+ * @param {要评价的康复方案的id,评价的星星个数,评价的内容} 
  * @return object
  */
 function setOderFeedback({pe_order_id, feedback_level, feedback_content}) {
@@ -243,8 +242,7 @@ function getResourceUrl({ trainlist, pe_order_id, user_id }) {
 /**
  * @action 10015
  * @desc 更新训练记录
- * @param array trainResourceList
- * @param int peOrderId 康复方案的id,用来查询用户的训练记录
+ * @param { 本次训练的资源id数组; 康复方案的id }
  * @return promise 
  */
 function updateUserTrainLog({ trainResourceList, peOrderId }) {
