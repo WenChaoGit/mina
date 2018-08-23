@@ -6,21 +6,21 @@ var app = getApp();
 
 Page({
   data: {
-    avatar_url : '../../../image/timg.png',
-    training : [],//训练中数组
-    trained : [],//已完成数组
+    avatar_url: '../../../image/timg.png',
+    training: [],//训练中数组
+    trained: [],//已完成数组
     nickname: "无",
     feedback_content: "",//评价内容
-    feedback_order_id : 0,//评价的orderid
+    feedback_order_id: 0,//评价的orderid
     winHeight: "",//窗口高度
     currentTab: 0, //预设当前项的值
     scrollLeft: 0, //tab标题的滚动条位置
     tabList: [{ 'id': 0, 'name': '进行中' }, { 'id': 1, 'name': '已完成' }],
     expertList: [{ //假数据
-      
+
     }],
     showModal: false,
-    
+
     starIndex1: 1,  //星星1
     starIndex2: 2,  //星星2
     starIndex3: 3,  //星星3
@@ -44,8 +44,8 @@ Page({
   },
   indexNav: function (e) {
     let { no } = e.currentTarget.dataset;
-    if (!no){
-      wx.showToast({title:'参数异常'});return;
+    if (!no) {
+      wx.showToast({ title: '参数异常' }); return;
     }
     wx.navigateTo({
       url: `/page/component/train/train?pe_order_id=${no}`,
@@ -56,89 +56,62 @@ Page({
    * @action 10007
    * @desc 获取用户的所有的训练列表包括进行中的,和已完成的
    */
-  async setInfo(){
-    let { code, msg:title, data } = await api.getTrainListInfo();
-    if (!code || code == errCode){
-      wx.showToast({title});return;
+  async setInfo() {
+    let { code, msg: title, data } = await api.getTrainListInfo();
+    if (!code || code == errCode) {
+      wx.showToast({ title }); return;
     }
-    let { training,trained } = data;
-    this.setData({ training, trained});
+    let { training, trained } = data;
+    this.setData({ training, trained });
   },
 
   // 弹出评价
   showDialogBtn: function (e) {
     this.setData({
       showModal: true,
-      feedback_order_id : e.currentTarget.dataset.no,
+      feedback_order_id: e.currentTarget.dataset.no,
     })
   },
   /**
    * 下拉加载训练列表
    */
-  async onPullDown(e){
+  async onPullDown(e) {
     console.log(e)
   },
-  handleUserRate({ detail }) {
-    var that = this;
+
+  /**
+   * @action 10012
+   * @desc 对某个已完成的康复方案进行评价
+   * @return mixed
+   */
+  async handleUserRate({ detail }) {
     const index = detail.index;
     if (index === 0) {
-      that.setData({
-        showModal: false,
-        feedback_content: '',
+      that.setData({ showModal: false, feedback_content: '' }); return;
+    }
+    if (index === 1) {
+      let { pe_order_id, startIndex2: feedback_level, feedback_content } = this.data;
+      let { code, msg: title } = await api.setOderFeedback({
+        pe_order_id, feedback_level, feedback_content
       });
-    } else if (index === 1) {
-      wx.showLoading({
-        title: '评价中...',
-      })
-      wx.request({
-        url: api.getPort(),
-        data: api.setOderFeedback({
-          'pe_order_id'     : that.data.feedback_order_id,
-          'feedback_level'  : that.data.starIndex2,
-          'feedback_content': that.data.feedback_content,
-        }),
-        method: 'post',
-        success: function (result) {
-          let d = api.parseResult(result);
-          if (d.code == api.getSuccessCode()) {
-            wx.reLaunch({
-              url: '/page/component/index/index',
-            });
-          } else {
-            wx.showToast({
-              title: d.msg,
-              icon: 'none',
-            });
-            that.setData({
-              showModal: false,
-            });
-          }
-        },
-        fail: function ({ errMsg }) {
-          console.log(errMsg);
-          wx.showToast({
-            title: '网络连接错误！',
-            icon: 'none',
-          })
-        },
-        complete: function () {
-          wx.hideLoading()
-        }
-      });
+      if (!code || code == errCode) {
+        this.setData({ showModal: false });
+        wx.showToast({ title }); return;
+      }
+      wx.reLaunch({ url: '/page/component/index/index' });
     }
   },
 
-  bindTextAreaBlur : function(e){
+  bindTextAreaBlur: function (e) {
     this.setData({
-      feedback_content : e.detail.value
+      feedback_content: e.detail.value
     });
   },
-  
+
   // 滚动切换标签样式
   switchTab: function (e) {
     this.setData({
-      currentTab: e.detail.current,
-
+      currentTab: e.detail.current
     });
     this.checkCor();
   },
@@ -186,7 +159,7 @@ Page({
   onShow: function () {
     if (session.isLogin()) {
       let user = session.getUserInfo();
-      if(user.avatar_url) {
+      if (user.avatar_url) {
         this.setData({
           avatar_url: user.avatar_url,
         });

@@ -175,10 +175,19 @@ function getTrainListInfo() {
 }
 
 /**
- * 对某次康复评价
+ * @action 10012
+ * @desc 对某次已完成的康复方案进行评价
+ * @return object
  */
-function setOderFeedback(pe_order_id) {
-  return initData(actionCode['orderFeedback'], pe_order_id);
+function setOderFeedback({pe_order_id, feedback_level, feedback_content}) {
+  http._showLoading('评价中...');
+  let action = actionCode['orderFeedback'];
+  let result = http.request({
+    data: { pe_order_id, feedback_level, feedback_content }, 
+    action 
+  });
+  http._hideLoading()
+  return result;
 }
 
 /**
