@@ -62,10 +62,9 @@ Page({
 
   // 弹出评价
   showDialogBtn: function ({ currentTarget }) {
-    this.setData({
-      showModal: true,
-      feedback_order_id: currentTarget.dataset.no,
-    })
+    //把获取到的no赋值到feedback_order_id
+    let { no:feedback_order_id } = currentTarget.dataset;
+    this.setData({showModal: true,feedback_order_id })
   },
   /**
    * 下拉加载训练列表
@@ -103,50 +102,36 @@ Page({
    * @param {小程序事件对象event中的detail} detail
    */
   bindTextAreaBlur: function ({ detail }) {
-    this.setData({
-      feedback_content: detail.value
-    });
+    this.setData({feedback_content: detail.value});
   },
 
   // 滚动切换标签样式
   switchTab: function ({ detail }) {
-    this.setData({
-      currentTab: detail.current
-    });
+    this.setData({currentTab: detail.current});
     this.checkCor();
   },
   // 点击标题切换当前页时改变样式
   swichNav: function ({ target }) {
-    var cur = target.dataset.current;
-    if (this.data.currentTaB == cur) { return false; }
-    else {
-      this.setData({
-        currentTab: cur
-      });
-    }
+    let currentTab = target.dataset.current;
+    if (this.data.currentTaB == currentTab) return ;
+    this.setData({ currentTab });
   },
   //判断当前滚动超过一屏时，设置tab标题滚动条。
   checkCor: function () {
     if (this.data.currentTab > 2) {
-      this.setData({
-        scrollLeft: 300
-      })
+      this.setData({ scrollLeft: 300 })
     } else {
-      this.setData({
-        scrollLeft: 0
-      })
+      this.setData({ scrollLeft: 0 })
     }
   },
   onLoad: function () {
-    var that = this;
     //  高度自适应
     wx.getSystemInfo({
-      success: function (res) {
-        var clientHeight = res.windowHeight,
-          clientWidth = res.windowWidth,
-          rpxR = 750 / clientWidth;
-        var calc = clientHeight * rpxR - 320;
-        that.setData({ winHeight: calc });
+      success: res => {
+        let { windowHeight: clientHeight, windowWidth: clientWidth } = res;
+        let rpxR = 750 / clientWidth;
+        let calc = clientHeight * rpxR - 320;
+        this.setData({ winHeight: calc });
       }
     });
   },
@@ -155,21 +140,13 @@ Page({
    */
   onShow: function () {
     if (session.isLogin()) {
-      let user = session.getUserInfo();
-      if (user.avatar_url) {
-        this.setData({
-          avatar_url: user.avatar_url,
-        });
-      }
-      this.setData({
-        nickname: user.nickname
-      });
-      this.setInfo();
-    } else {
-      wx.redirectTo({
-        url: '../login/index',
-      })
+      let { avatar_url, nickname } = session.getUserInfo();
+      if (avatar_url && nickname) this.setData({ avatar_url, nickname });
+      this.setInfo();return;
     }
+    // 没有登录就跳转到登录页面进行登录
+    wx.redirectTo({ url: '../login/index' })
+    
   },
   footerTap: app.footerTap
 })
