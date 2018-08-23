@@ -11,11 +11,10 @@
     </view>
   </view>
   <view>
-    <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+    <scroll-view scroll-y="true"  bindscrolltolower="onPullDown" class="tab-h" scroll-left="{{scrollLeft}}">
       <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">进行中</view>
       <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">已完成</view>
     </scroll-view>
-    
     <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
       <swiper-item>
         <scroll-view scroll-y="true" class="scoll-h">
@@ -96,7 +95,6 @@
       </swiper-item>
     </swiper>
   </view>
-
   <i-modal visible="{{ showModal }}" actions="{{ actions }}" bind:click="handleUserRate">
     <view class='text-left'>请您对我们做出评价：</view>
     <view class='text-left'>

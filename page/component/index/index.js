@@ -1,7 +1,7 @@
 var session = require('../../../utils/session.js');
 var api = require('../../../utils/api.js');
-import regeneratorRuntime from '../../../utils/runtime'; //用来编译async await
 import { errCode } from '../../../utils/config.js';
+import regeneratorRuntime from '../../../utils/runtime'; //用来编译async await
 var app = getApp();
 
 Page({
@@ -72,7 +72,12 @@ Page({
       feedback_order_id : e.currentTarget.dataset.no,
     })
   },
-
+  /**
+   * 下拉加载训练列表
+   */
+  async onPullDown(e){
+    console.log(e)
+  },
   handleUserRate({ detail }) {
     var that = this;
     const index = detail.index;
