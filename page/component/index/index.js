@@ -37,6 +37,9 @@ Page({
       'starIndex2': index
     })
   },
+  /**
+   *  @param {小程序事件对象event中的currentTarget} currentTarget
+   */
   indexNav: function ({ currentTarget }) {
     let { no } = currentTarget.dataset;
     if (!no) {
@@ -60,11 +63,14 @@ Page({
     this.setData({ training, trained });
   },
 
-  // 弹出评价
+  /**
+   * @desc 弹出评价
+   * @param {小程序事件对象event中的currentTarget} currentTarget
+   */
   showDialogBtn: function ({ currentTarget }) {
     //把获取到的no赋值到feedback_order_id
-    let { no:feedback_order_id } = currentTarget.dataset;
-    this.setData({showModal: true,feedback_order_id })
+    let { no: feedback_order_id } = currentTarget.dataset;
+    this.setData({ showModal: true, feedback_order_id })
   },
   /**
    * 下拉加载训练列表
@@ -77,7 +83,6 @@ Page({
    * @action 10012
    * @desc 对某个已完成的康复方案进行评价
    * @param {小程序事件对象event中的detail} detail
-   * @return mixed
    */
   async handleUserRate({ detail }) {
     const index = detail.index;
@@ -98,22 +103,28 @@ Page({
   },
 
   /**
-   * @desc ''
+   * @desc 用户在评价的模态窗中输入文字时,把获取到的评价内容传递到data中feedback_content中
    * @param {小程序事件对象event中的detail} detail
    */
   bindTextAreaBlur: function ({ detail }) {
-    this.setData({feedback_content: detail.value});
+    this.setData({ feedback_content: detail.value });
   },
 
-  // 滚动切换标签样式
+  /**
+   * @desc 滚动切换标签样式
+   * @param {小程序事件对象event中的detail} detail
+   */
   switchTab: function ({ detail }) {
-    this.setData({currentTab: detail.current});
+    this.setData({ currentTab: detail.current });
     this.checkCor();
   },
-  // 点击标题切换当前页时改变样式
+  /**
+   * @desc 点击标题切换当前页时改变样式
+   * @param {小程序事件对象event中的target} target
+   */
   swichNav: function ({ target }) {
     let currentTab = target.dataset.current;
-    if (this.data.currentTaB == currentTab) return ;
+    if (this.data.currentTaB == currentTab) return;
     this.setData({ currentTab });
   },
   //判断当前滚动超过一屏时，设置tab标题滚动条。
@@ -130,8 +141,8 @@ Page({
       success: res => {
         let { windowHeight: clientHeight, windowWidth: clientWidth } = res;
         let rpxR = 750 / clientWidth;
-        let calc = clientHeight * rpxR - 320;
-        this.setData({ winHeight: calc });
+        let winHeight = clientHeight * rpxR - 320;
+        this.setData({ winHeight });
       }
     });
   },
@@ -142,11 +153,10 @@ Page({
     if (session.isLogin()) {
       let { avatar_url, nickname } = session.getUserInfo();
       if (avatar_url && nickname) this.setData({ avatar_url, nickname });
-      this.setInfo();return;
+      this.setInfo(); return;
     }
     // 没有登录就跳转到登录页面进行登录
     wx.redirectTo({ url: '../login/index' })
-    
   },
   footerTap: app.footerTap
 })
