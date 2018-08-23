@@ -27,13 +27,8 @@ Page({
     starIndex4: 4,  //星星4
     starIndex5: 5,  //星星5
     actions: [
-      {
-        name: '取消'
-      },
-      {
-        name: '提交',
-        color: '#f04748',
-      }
+      {name: '取消'},
+      {name: '提交',color: '#f04748'}
     ],
   },
   onStar(e) {

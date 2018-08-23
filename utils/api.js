@@ -181,11 +181,9 @@ function getTrainListInfo() {
  */
 function setOderFeedback({pe_order_id, feedback_level, feedback_content}) {
   http._showLoading('评价中...');
-  let action = actionCode['orderFeedback'];
-  let result = http.request({
-    data: { pe_order_id, feedback_level, feedback_content }, 
-    action 
-  });
+  let data = { pe_order_id, feedback_level, feedback_content };//拼接参数
+  let action = actionCode['orderFeedback']; //获取action值
+  let result = http.request({ data, action });//调用http请求方法
   http._hideLoading()
   return result;
 }
