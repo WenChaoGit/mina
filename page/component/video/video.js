@@ -37,6 +37,13 @@ Page({
    */
   onShow: function () {
     this.getVideoInfo();
+    this._getTrainResourceAndTimesList();//获取资源训练的时长信息
+  },
+
+  _getTrainResourceAndTimesList() {
+    let { trainResourceAndTimesList } = app.globalData;
+    if (!trainResourceAndTimesList) trainResourceAndTimesList = [];
+    this.setData({ trainResourceAndTimesList });
   },
   async getVideoInfo() {
     let { resource_id } = this.data;
@@ -76,13 +83,24 @@ Page({
   },
 
   /**
-   * 视频播放快要结束时,如果有训练分钟的要求,那么快要结束的时候就暂停视频
+   * @desc 视频播放快要结束时,如果有训练分钟的要求,那么快要结束的时候就暂停视频
+   * @param {小程序事件对象中detail}
    */
-  onTimeUpdate: function (e) {
-    let time = e.detail.currentTime;
-    if (String(time).startsWith('5')) {
-      // this.videoCtx.pause();
-    }
+  onTimeUpdate: function ({ detail }) {
+    // let { currentTime, duration } = detail;
+    // let nearlyEndTime = duration - 20;//结束前5秒;
+    // // if (String(currentTime).startsWith(nearlyEndTime)) {
+    // let { trainResourceAndTimesList, resource_id } = this.data;
+    // let resTimeInfo = trainResourceAndTimesList.find(item => item.resource_id == resource_id);
+    // let optName = resTimeInfo.options[0].name;
+    // if (optName.includes('秒') || optName.includes('分')) {
+    //   console.log(optName);
+    //   let pauseTime = optName.match(/^\s[0-9][0-9]秒$/);
+    //   console.log(pauseTime);
+    // }
+    // this.videoCtx.pause();
+    // }
+
     // setTimeout(() => {
     //   this.videoCtx.play()
     // }, 1000*60);

@@ -1,8 +1,8 @@
 <swiper-item>
   <scroll-view  scroll-y="true" class="scoll-h">
   <block wx:for="{{level}}" wx:key="*this" wx:for-item="item">
-    <block wx:for="{{item.list}}" wx:key="*this" wx:for-item="list">
-      <view class="weui-form-preview line_none card_radius xunlian_bg ml mr mt-sm">
+    <block wx:for="{{item.list}}" wx:key="*this" wx:for-item="list" >
+      <view  class="weui-form-preview line_none card_radius xunlian_bg ml mr mt-sm">
         <view class="weui-form-left" bindtap='videoBtn' data-no='{{list.resource_id}}' data-type='{{list.resource_type}}'>
             <view>
               <text class='weui_title'>{{list.question_name}}</text>

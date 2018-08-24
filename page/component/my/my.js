@@ -119,6 +119,7 @@ Page({
       title: '退出',
       content: '您确定要退出？',
       confirmText: "确定",
+      confirmColor: '#f04748',
       cancelText: "取消",
       success: function (res) {
         if (res.confirm) {

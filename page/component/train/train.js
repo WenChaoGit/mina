@@ -73,6 +73,7 @@ Page({
 		}
 		// 把数据存放到app的globalData中   
 		app.globalData.trainResourceList = data;
+		app.globalData.trainResourceAndTimesList = trainlist[0] //训练资源和次数
 		app.globalData.peOrderId = pe_order_id;
 		wx.navigateTo({
 			url: `/page/component/video/video?resource_id=${data[0]}`
