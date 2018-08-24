@@ -1,7 +1,8 @@
 /**index.wxss**/
 .index_title {
-	background: -webkit-linear-gradient(0deg,#f04848,#ef6647);
-	padding: 20px;
+	background: #f04848;
+	/* background: -webkit-linear-gradient(0deg,#f04848,#ef6647); */
+	padding: 30px 20px;
 }
 
 .img_round {

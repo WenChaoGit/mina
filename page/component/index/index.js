@@ -12,7 +12,9 @@ Page({
     nickname: "无",
     feedback_content: "",//评价内容
     feedback_order_id: 0,//评价的orderid
-    winHeight: "",//窗口高度
+    hidden: true,
+    scrollTop: 0,
+    scrollHeight: 0,
     currentTab: 0, //预设当前项的值
     scrollLeft: 0, //tab标题的滚动条位置
     tabList: [{ 'id': 0, 'name': '进行中' }, { 'id': 1, 'name': '已完成' }],
@@ -61,6 +63,21 @@ Page({
     }
     // let { training, trained } = data;
     this.setData({ ...data });
+  },
+
+  /**
+   * @desc 滚动至页面底部 下拉加载更多
+   * 
+   */
+  async onScrollBottom(){
+    
+  },
+
+  /**
+   * @desc 滚动至顶部 上拉刷新页面
+   */
+  async onScrollTop(){
+    
   },
 
   /**
@@ -139,10 +156,8 @@ Page({
     //  高度自适应
     wx.getSystemInfo({
       success: res => {
-        let { windowHeight: clientHeight, windowWidth: clientWidth } = res;
-        let rpxR = 750 / clientWidth;
-        let winHeight = clientHeight * rpxR - 320;
-        this.setData({ winHeight });
+        let scrollHeight = res.windowHeight - 150;
+        this.setData({scrollHeight})
       }
     });
   },

@@ -145,11 +145,17 @@ function getHealthInfo() {
 }
 
 /**
- * 用户授权获取userinfo
+ * @action 10013
+ * @desc 用户授权获取userinfo
+ * 
  */
-function setUserInfo(userinfo, mobile) {
+function setUserInfo({ userinfo, mobile}) {
+  http._showLoading()
   let data = { userinfo, mobile };
-  return initData(action['setUserinfo'], data);
+  let action = actionCode['setUserinfo']
+  let result = http.request({ data, action })
+  http._hideLoading()
+  return result
 }
 
 /**

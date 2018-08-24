@@ -9,10 +9,10 @@
     </view>
   </view>
 </view>
-<view class="weui-cells">
+<view class=" mt weui-form-preview  line_none">
   <view class="weui-cell weui-cell_access p-lg" wx:if='{{is_userinfo}}'>
     <view class="weui-cell__hd">
-      <image src="/image/my_icon_1.png" class='my_icon'></image>
+      <image src="/image/my_icon_2.png" class='my_icon'></image>
     </view>
     <view class="weui-cell__bd">
       <button class="userInfoBtn" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">授权完善信息</button>
@@ -21,7 +21,7 @@
   </view>
 </view>
 
-<view class="weui-cells">
+<view class="mt weui-form-preview  line_none">
   <view bindtap='healthFile' class="weui-cell weui-cell_access p-lg">
     <view class="weui-cell__hd">
       <image src="/image/my_icon_1.png" class='my_icon'></image>

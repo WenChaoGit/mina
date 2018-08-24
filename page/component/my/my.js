@@ -1,7 +1,9 @@
 // pages/my/my.js
-var util = require('../../../utils/util.js');
-var api = require('../../../utils/api.js');
-var session = require('../../../utils/session.js');
+const util = require('../../../utils/util.js');
+const api = require('../../../utils/api.js');
+const session = require('../../../utils/session.js');
+import regeneratorRuntime from '../../../utils/runtime'; //用来编译async await
+import { errCode } from '../../../utils/config.js';
 
 Page({
 
@@ -9,16 +11,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    nickname   : '无',
+    nickname: '无',
     is_userinfo: true,
-    avatar_url : '../../../image/timg.png',
+    avatar_url: '../../../image/tximg.png',
   },
   gotoUserInfo: function () {
     wx.navigateTo({
       url: '/page/component/userinfo/userinfo',
     })
   },
-  newsList:function() {
+  newsList: function () {
     wx.navigateTo({
       url: '/pages/news/news',
     })
@@ -47,76 +49,72 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let user = session.getUserInfo();
-    if(user.avatar_url) {
-      this.setData({
-        avatar_url: user.avatar_url,
-      })
+    let { avatar_url,is_userinfo,nickname } = session.getUserInfo();
+    if (avatar_url) {
+      this.setData({avatar_url});
     }
-    this.setData({
-      nickname   : user.nickname,
-      is_userinfo: user.is_userinfo,
-    })
+    if (!is_userinfo) is_userinfo = false;
+    this.setData({nickname ,is_userinfo});
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   },
-  getInfo: function() {
+  getInfo: function () {
     let d = session.getUserInfo();
-    if(d === '') {
+    if (d === '') {
       console.log('none');
     } else {
       console.log(d);
     }
   },
 
-  logout: function() {
+  logout: function () {
     wx.showModal({
       title: '退出',
       content: '您确定要退出？',
@@ -133,41 +131,24 @@ Page({
     })
   },
 
-  onGotUserInfo:function(e){
-    var that = this;
-    let user = session.getUserInfo();
-    if(e.detail.errMsg == 'getUserInfo:ok'){
-      wx.showLoading({
-        title: '操作中...',
-      })
-      wx.request({
-        url: api.getPort(),
-        data: api.setUserInfo(e.detail.userInfo,user.mobile),
-        method: 'post',
-        success: function (result) {
-          let d = api.parseResult(result);
-          if (d.code == api.getSuccessCode()) {
-            session.saveUserInfo(d.data);
-            wx.reLaunch({
-              url: '/page/component/my/my',
-            });
-          } else {
-            wx.showToast({
-              title: d.msg,
-              icon: 'none',
-            })
-          }
-        },
-        fail: function ({ errMsg }) {
-          wx.showToast({
-            title: '网络连接错误！',
-            icon: 'none',
-          })
-        },
-        complete: function () {
-          wx.hideLoading()
-        }
+  /**
+   * @action 10013
+   * @desc 授权完善用户信息
+   * @param {detail} 小程序中的事件对象的detail对象
+   */
+  async onGotUserInfo({ detail }) {
+    let { mobile } = session.getUserInfo();
+    if (detail.errMsg == 'getUserInfo:ok') {
+      let { userInfo: userinfo } = detail;
+      let { code, msg: title, data } = await api.setUserInfo({ userinfo, mobile });
+      if (!code || code == errCode) {
+        wx.showToast({ title }); return;
+      }
+      session.saveUserInfo(data);
+      wx.reLaunch({
+        url: '/page/component/my/my',
       });
     }
-  },
+  }
+
 })

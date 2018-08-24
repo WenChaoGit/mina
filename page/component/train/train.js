@@ -35,10 +35,23 @@ Page({
 			wx.showToast({title: '资源类型错误'});
 		}
 	},
+	/**
+	 * @desc 页面加载时获取其 路由传递过来的参数
+	 */
 	onLoad: function (options) {
 		let { pe_order_id } = options;
 		this.setData({ pe_order_id });
 	},
+	/**
+	 * @desc 监听页面显示,用康复方案id获取其自我训练的内容,自我训练没有视频的不展示
+	 */
+	onShow: function () {
+		this.getOneTrain();
+	},
+
+	/**
+	 * 获取自我训练内容
+	 */
 	async getOneTrain() {
 		let { pe_order_id } = this.data;
 		let { code, msg: title, data } = await api.getOneTrainInfo({ pe_order_id });
@@ -66,33 +79,7 @@ Page({
 		});
 	},
 
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: function () {
-		this.getOneTrain();
-	},
-
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
-	onHide: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
-	onUnload: function () {
-
-	},
+	
 
 	/**
 	 * 页面相关事件处理函数--监听用户下拉动作
