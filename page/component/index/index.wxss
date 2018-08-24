@@ -68,7 +68,7 @@
 
 .range_box {
 	width: calc(100% - 70px);
-	height: 10px;
+	height: 13px;
 	background: #f1f1f1;
 	border-radius: 10px;
 	margin-top: 7px;
@@ -81,7 +81,7 @@
 	left: 0;
 	background: #fbc5be;
 	display: block;
-	height: 10px;
+	height: 13px;
 	border-radius: 10px;
 }
 

@@ -59,8 +59,8 @@ Page({
     if (!code || code == errCode) {
       wx.showToast({ title }); return;
     }
-    let { training, trained } = data;
-    this.setData({ training, trained });
+    // let { training, trained } = data;
+    this.setData({ ...data });
   },
 
   /**

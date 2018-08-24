@@ -9,7 +9,7 @@
             </view>
             <view class='minuBox'>
               <block wx:for="{{list.treat}}" wx:key="*this" wx:for-item="treat">
-                <text style="margin-left:10px">{{treat.name}}</text>
+                <text >{{treat.name}}</text>
               </block>
             </view>
         </view>

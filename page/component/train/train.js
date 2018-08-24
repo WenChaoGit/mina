@@ -23,22 +23,16 @@ Page({
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	videoBtn(e) {
-		let { type: resource_type, no } = e.currentTarget.dataset;
+	videoBtn({ currentTarget}) {
+		let { type: resource_type, no } = currentTarget.dataset;
 		if (resource_type == 0) {
-			wx.showToast({
-				title: '暂无关联资源',
-				icon: 'none',
-			});
+			wx.showToast({title: '暂无关联资源'});
 		} else if (resource_type == RESOURCE_TYPE_VIDEO) {
 			wx.navigateTo({
 				url: `/page/component/video/video?resource_id=${no}`
 			});
 		} else {
-			wx.showToast({
-				title: '资源类型错误',
-				icon: 'none',
-			});
+			wx.showToast({title: '资源类型错误'});
 		}
 	},
 	onLoad: function (options) {
@@ -51,8 +45,7 @@ Page({
 		if (!code || code == errCode) {
 			wx.showToast({ title }); return;
 		}
-		let { trainlist, level, pe_result } = data;
-		this.setData({ trainlist, level, pe_result });
+		this.setData({ ...data });
 	},
 	async startTrain() {
 		let { trainlist, pe_order_id } = this.data;

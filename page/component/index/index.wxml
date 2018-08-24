@@ -7,7 +7,7 @@
     </view>
     <view class="text-box">
       <navigator hover-class='none' url='../userinfo/userinfo' class="text-white font-size-15 block">{{nickname}}</navigator>
-      <text class="text-white block font-size-14">马上训练，恢复功能水平</text>
+      <text class="text-white block font-size-12">马上训练，恢复功能水平</text>
     </view>
   </view>
   <view>
