@@ -1,0 +1,15 @@
+<!-- component/health/index.wxml--健康档案卡片组件 -->
+<view class="health-container" bind:tap="onDetail" data-id="{{health.id}}">
+    <view class="header">
+        <image class="pg-img" src="pinggu_icon.png"/>
+        <text class="cate-name">{{health.pe_cate_id}}</text>
+    </view>
+    <line class="line" />
+    <view class="content">
+        <text  class="content-item">评估医师: {{health.admin_id}}</text>
+        <text  class="content-item">评估时间: {{health.created}}</text>
+        <text  class="content-item">评估门店: {{health.store_id}}</text>
+        <text  class="content-item">评估结果: {{health.pe_result}}</text>
+    </view>
+    <view class="footer"></view>
+</view>

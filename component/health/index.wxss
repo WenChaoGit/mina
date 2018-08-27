@@ -1,0 +1,51 @@
+/* component/health/index.wxss */
+.health-container{
+    width: 90%;
+    height: 400rpx;
+    margin-top:20rpx;
+    margin-left:18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 28rpx;
+    background-color:#ffffff;
+    border-radius: 10px;
+}
+.header{
+    display: flex;
+    align-items: center;
+    margin-top: 30rpx;
+    margin-left:30rpx;
+}
+.header .cate-name{
+    font-size: 32rpx;
+    line-height: 32rpx;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-bottom:1px;
+}
+.health-container .content{
+    display: flex;
+    flex-direction: column;
+    color: #373737;
+    padding:15px 10px 0px;
+}
+.pg-img{
+    width: 32rpx;
+    height: 32rpx;
+}
+.line{
+  height: 50rpx;
+  margin-right:0px 14rpx;
+  margin-bottom: 2rpx;
+  border-bottom: 1px solid rgba(0,0,0,.05)
+}
+.content-item{
+    height: 100rpx;
+    line-height: 64rpx;
+}
+.footer{
+    height: 100rpx;
+}
+
+

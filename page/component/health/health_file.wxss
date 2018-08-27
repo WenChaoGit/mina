@@ -80,3 +80,7 @@ navigator{
   top: 50%;
   width: 100%;
 }
+.health{
+  display: flex;
+  justify-content: center;
+}

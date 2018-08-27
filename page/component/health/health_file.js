@@ -41,9 +41,14 @@ Page({
       }
     });
   },
-  healthFileXq : function (e) {
+  // healthFileXq : function (e) {
+  //   wx.navigateTo({
+      // url: '/page/component/health_xq/health_file_xq?pe_order_id='+e.currentTarget.dataset.no,
+  //   })
+  // },
+  getDetail({detail}){
     wx.navigateTo({
-      url: '/page/component/health_xq/health_file_xq?pe_order_id='+e.currentTarget.dataset.no,
-    })
-  },
+      url: '/page/component/health_xq/health_file_xq?pe_order_id=' + detail.id,
+    });   
+  }
 });

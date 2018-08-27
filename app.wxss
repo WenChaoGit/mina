@@ -3,6 +3,7 @@
 @import "/page/common/common.wxss";
 page{
   background: #f5f5f5;
+  font-family:"PingFangSC-Thin";
 }
 ::-webkit-scrollbar {
 	width: 0px;
