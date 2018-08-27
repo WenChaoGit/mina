@@ -40,7 +40,7 @@
                 <view class="weui-form-preview__item">
                   <text style="font-weight:bolder" class="font-size-15 pull-left text-block ">{{item.pe_cate_id}}</text>
                   <view class="span_red_border font-size-12 ml pull-left">
-                    {{item.level_day}}天/{{item.lnum}}次
+                    {{item.level_day}}次
                   </view>
                   <text class="text-red card_acress font-size-13">详情</text>
                 </view>
