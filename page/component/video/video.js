@@ -18,6 +18,7 @@ Page({
         color: '#f04b49'
       }
     ],
+    pauseState:false,
   },
   onReady: function () {
     this.videoCtx = wx.createVideoContext('resourceVideo');
@@ -87,25 +88,30 @@ Page({
    * @param {小程序事件对象中detail}
    */
   onTimeUpdate: function ({ detail }) {
-    // let { currentTime, duration } = detail;
-    // let nearlyEndTime = duration - 20;//结束前5秒;
-    // // if (String(currentTime).startsWith(nearlyEndTime)) {
-    // let { trainResourceAndTimesList, resource_id } = this.data;
-    // let resTimeInfo = trainResourceAndTimesList.find(item => item.resource_id == resource_id);
-    // let optName = resTimeInfo.options[0].name;
-    // if (optName.includes('秒') || optName.includes('分')) {
-    //   console.log(optName);
-    //   let pauseTime = optName.match(/^\s[0-9][0-9]秒$/);
-    //   console.log(pauseTime);
-    // }
-    // this.videoCtx.pause();
-    // }
-
-    // setTimeout(() => {
-    //   this.videoCtx.play()
-    // }, 1000*60);
-    // this.videoCtx.play(); 
-
+    let { currentTime, duration } = detail;
+    let nearlyEndTime = duration - 5;//结束前5秒;
+    let pauseTime;
+    if (currentTime >= nearlyEndTime) {
+      let { trainResourceAndTimesList, resource_id } = this.data;
+      let resTimeInfo = trainResourceAndTimesList.find(item => item.resource_id == resource_id);
+      let optName = resTimeInfo.options[0].name;
+      if (optName.includes('秒')){
+        let timeOpt = optName.match(/\d+秒/g);
+        pauseTime = timeOpt[0].match(/\d+/)*1000;
+      } else if (optName.includes('分')) {
+        let timeOpt = optName.match(/\d+分/);
+        pauseTime = timeOpt[0].match(/\d+/) * 60*1000;
+      }
+      if(!this.data.pauseState){
+        this.videoCtx.pause();
+        this.setData({ pauseState: true })
+      }
+      setTimeout(() => {
+        this.videoCtx.play()
+      }, pauseTime);
+    }
+    
+   
   },
   /**
    * @desc 视频播放完成后操作,继续播放,或者弹窗训练完成提示

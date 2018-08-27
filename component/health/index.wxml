@@ -1,7 +1,7 @@
 <!-- component/health/index.wxml--健康档案卡片组件 -->
 <view class="health-container" bind:tap="onDetail" data-id="{{health.id}}">
     <view class="header">
-        <image class="pg-img" src="pinggu_icon.png"/>
+        <image class="pg-img" src="images/pinggu_icon.png"/>
         <text class="cate-name">{{health.pe_cate_id}}</text>
     </view>
     <line class="line" />

@@ -103,7 +103,6 @@ function getSessionKey(code) {
  */
 function getYzm(mobile) {
   let data = { mobile };
-
   return initData(actionCode['yzm'], data);
 }
 

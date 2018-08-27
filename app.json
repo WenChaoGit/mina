@@ -1,7 +1,6 @@
 {
   "pages": [
     "page/component/index/index",
-    "page/component/appointment/appointment",
     "page/component/my/my",
     "page/component/login/index",
     "page/component/login/login_yzm",
@@ -9,8 +8,6 @@
     "page/component/userinfo/userinfo",
     "page/component/feedback/feedback",
     "page/component/train/train",
-    "page/component/audio/audio",
-    "page/component/image/image",
     "page/component/video/video",
     "page/component/health/health_file",
     "page/component/health_xq/health_file_xq",

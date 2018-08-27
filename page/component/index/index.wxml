@@ -33,7 +33,7 @@
             <view class='indextextnone'>暂无数据~</view>
             <image src='../../../image/indexnone.png' class='indexnone_img'></image>
           </view>
-          <block wx:for="{{training}}" wx:key="*this" wx:for-item="item">
+          <block wx:for="{{training}}" wx:key="item.id" wx:for-item="item">
             <!-- 进行中 -->
             <view current="1" class="weui-form-preview view_a line_none card_radius ml mr mt-sm mb-sm">
               <view data-no='{{item.id}}' bindtap='indexNav' class="weui-form-preview__bd">
