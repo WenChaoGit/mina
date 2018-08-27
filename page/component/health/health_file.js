@@ -1,5 +1,7 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../utils/api.js');
+import regeneratorRuntime from '../../../utils/runtime'; //用来编译async await
+import { errCode } from '../../../utils/config.js';
 
 Page({
   data: {
@@ -8,47 +10,18 @@ Page({
   onShow: function () {
     this.getHealthBtn();
   },
-  getHealthBtn: function(){
-    var that = this;
-    wx.showLoading({
-      title: '操作中...',
-    })
-    wx.request({
-      url: api.getPort(),
-      data: api.getHealthInfo(),
-      method: 'post',
-      success: function (result) {
-        let d = api.parseResult(result);
-        if (d.code == api.getSuccessCode()) {
-          that.setData({
-            'info': d.data,
-          })
-        } else {
-          wx.showToast({
-            title: d.msg,
-            icon: 'none',
-          })
-        }
-      },
-      fail: function ({ errMsg }) {
-        wx.showToast({
-          title: '网络连接错误！',
-          icon: 'none',
-        })
-      },
-      complete: function () {
-        wx.hideLoading()
-      }
-    });
+  async getHealthBtn(){
+    let { data:info, code, msg:title } = await api.getHealthInfo();
+    if(!title) title = '抱歉,出现错误';
+    if(!code || code == errCode){
+      wx.showToast({title});return;
+    }
+    this.setData({info});  
   },
-  // healthFileXq : function (e) {
-  //   wx.navigateTo({
-      // url: '/page/component/health_xq/health_file_xq?pe_order_id='+e.currentTarget.dataset.no,
-  //   })
-  // },
+ 
   getDetail({detail}){
     wx.navigateTo({
-      url: '/page/component/health_xq/health_file_xq?pe_order_id=' + detail.id,
+      url: `/page/component/health_xq/health_file_xq?pe_order_id=${detail.id}`,
     });   
   }
 });

@@ -5,7 +5,7 @@
 </view>
 <swiper-item class=''>
   <scroll-view scroll-y="true" class="scoll-h">
-    <block  wx:for="{{info}}" wx:key="*this" wx:for-item="item">
+    <block  wx:for="{{info}}" wx:key="{{item.id}}" wx:for-item="item">
       <v-health health="{{item}}" bind:detail="getDetail"></v-health>
     </block>
   </scroll-view>

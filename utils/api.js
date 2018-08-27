@@ -140,8 +140,12 @@ function getUpdateUserInfo(id_card_no, gender, birthday, nickname) {
  * 初始化健康档案接口数据
  */
 function getHealthInfo() {
+  http._showLoading()
   let data = {};
-  return initData(actionCode['health'], data);
+  let action = actionCode['health']
+  let result = http.request({ data, action })
+  http._hideLoading()
+  return result
 }
 
 /**
