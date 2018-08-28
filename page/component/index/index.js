@@ -6,15 +6,17 @@ var app = getApp();
 
 Page({
   data: {
-    avatar_url: '../../../image/timg.png',
+    avatar_url: '../../../image/tximg.png',
     training: [],//训练中数组
     trained: [],//已完成数组
     nickname: "无",
     feedback_content: "",//评价内容
     feedback_order_id: 0,//评价的orderid
     hidden: true,
+    upperThreshold:50,
     scrollTop: 0,
     scrollHeight: 0,
+    refreshText:'正在刷新中...',
     currentTab: 0, //预设当前项的值
     scrollLeft: 0, //tab标题的滚动条位置
     tabList: [{ 'id': 0, 'name': '进行中' }, { 'id': 1, 'name': '已完成' }],
@@ -22,7 +24,7 @@ Page({
 
     }],
     showModal: false,
-
+    refreshState: false,
     starIndex1: 1,  //星星1
     starIndex2: 2,  //星星2
     starIndex3: 3,  //星星3
@@ -32,12 +34,43 @@ Page({
       { name: '取消' },
       { name: '提交', color: '#f04748' }
     ],
+    touchStartY:0,
+    touchEndY:0
   },
   onStar({ detail }) {
     const index = detail.index;
     this.setData({
       'starIndex2': index
     })
+  },
+  async touchStart({changedTouches}){
+    let touchStartY = changedTouches[0].clientY;
+    console.log(touchStartY)
+    this.setData({touchStartY})
+  },
+  async touchMove(e) {
+    console.log(e);
+    // let touchStartY = changedTouches[0].clientY;
+    // this.setData({ refreshState: true, touchStartY})
+  },
+
+  async touchEnd({ changedTouches}){
+    let touchEndY = changedTouches[0].clientY;
+    console.log(touchEndY)
+    if (touchEndY > this.data.touchStartY){
+      console.log(11);
+      this.setData({ refreshState: true })
+    }
+  },
+  async onPullDownRefresh() {
+    wx.showNavigationBarLoading();
+    let { code, msg: title, data } = await api.getTrainListInfo();
+    if (!code || code == errCode) {
+      wx.showToast({ title }); return;
+    }
+    this.setData({ ...data });
+    wx.hideNavigationBarLoading() //完成停止加载
+    wx.stopPullDownRefresh() //停止下拉刷新
   },
   /**
    *  @param {小程序事件对象event中的currentTarget} currentTarget
@@ -61,7 +94,6 @@ Page({
     if (!code || code == errCode) {
       wx.showToast({ title }); return;
     }
-    // let { training, trained } = data;
     this.setData({ ...data });
   },
 
@@ -69,15 +101,23 @@ Page({
    * @desc 滚动至页面底部 下拉加载更多
    * 
    */
-  async onScrollBottom(){
-    
+  async onScrollBottom() {
+
   },
 
   /**
    * @desc 滚动至顶部 上拉刷新页面
    */
-  async onScrollTop(){
-    
+  async onScrollTop() {
+    this.setData({ refreshState: true });
+    let { code, msg: title, data } = await api.getTrainListInfo();
+    if (!code || code == errCode) {
+      wx.showToast({ title }); return;
+    }
+    this.setData({ ...data });
+    setTimeout(() => {
+      this.setData({ refreshState: false });
+    }, 1000);
   },
 
   /**
@@ -157,7 +197,7 @@ Page({
     wx.getSystemInfo({
       success: res => {
         let scrollHeight = res.windowHeight - 150;
-        this.setData({scrollHeight})
+        this.setData({ scrollHeight })
       }
     });
   },

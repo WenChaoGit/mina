@@ -61,7 +61,7 @@
 	border: 1px solid #f04748;
 	line-height: 1;
 	color: #f04748;
-	margin-top: 8px;
+	margin-top: 6px;
 	max-width: 60px;
 	display: block;
 	font-size: 12px;

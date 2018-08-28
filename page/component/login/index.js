@@ -1,7 +1,7 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../utils/api.js');
 var session = require('../../../utils/session.js');
-var app = getApp();
+const app = getApp();
 Page({
 
   /**
@@ -35,11 +35,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var session_key = app.globalData.session_key;
+    //  app.globalData.session_key;
+    if (app.globalData.session_key && app.globalData.session_key !=''){
+      this.setData({
+        session_key: app.globalData.session_key,
+      });
+    }else{
+      app.globalData.sessionKeyCallBack = session_key => {
+        this.setData({ session_key });
+      }
+    }
     let user = session.getUserInfo();
-    this.setData({
-      session_key : session_key,
-    });
+    // this.setData({
+    //   session_key : session_key,
+    // });
     if(user) {
       this.setData({
         nickname : user.nickname,

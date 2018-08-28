@@ -13,7 +13,7 @@
     </view>
   </view>
   <view>
-    <scroll-view scroll-y="true" bindscrolltolower="onPullDown" class="tab-h" scroll-top="{{scrollLeft}}">
+    <scroll-view scroll-y="true"  upper-threshold="{{upperThreshold}}" bindscrolltolower="onPullDown" class="tab-h" scroll-top="{{scrollLeft}}">
       <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">
         进行中
       </view>
@@ -21,14 +21,10 @@
         已完成
       </view>
     </scroll-view>
-    <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{scrollHeight}}px">
+    
+    <swiper  class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{scrollHeight}}px">
       <swiper-item>
-        <scroll-view 
-          scroll-y = "true" 
-          bindscrolltolower = "onScrollBottom" 
-          bindscrolltoupper = "onScrollTop"
-          style="height:{{scrollHeight}}px;"
-        >
+        <view  style="height:{{scrollHeight}}px;">
           <view wx:if="{{ training.length==0}}">
             <view class='indextextnone'>暂无数据~</view>
             <image src='../../../image/indexnone.png' class='indexnone_img'></image>
@@ -38,10 +34,10 @@
             <view current="1" class="weui-form-preview view_a line_none card_radius ml mr mt-sm mb-sm">
               <view data-no='{{item.id}}' bindtap='indexNav' class="weui-form-preview__bd">
                 <view class="weui-form-preview__item">
-                  <text style="font-weight:bolder" class="font-size-15 pull-left text-block ">{{item.pe_cate_id}}</text>
-                  <view class="span_red_border font-size-12 ml pull-left">
-                    {{item.level_day}}次
+                  <view style="font-weight:bold" class="font-size-15 pull-left text-block ">
+                    {{item.pe_cate_id}}
                   </view>
+                  <view class="span_red_border font-size-12 ml pull-left">{{item.level_day}}次</view>
                   <text class="text-red card_acress font-size-13">详情</text>
                 </view>
                 <view class="weui-form-preview__item">
@@ -60,16 +56,18 @@
                 </view>
                 <view class="weui-form-preview__item mt-sm">
                   <image src="../../../image/icon_a.png" class="pull-left mt-sm icon"></image>
-                  <text class="pull-left font-size-13 ml-sm">加油！训练初见成效！</text>
+                  <view class="pull-left font-size-13 ml-sm">
+                    {{item.percent !==0 ?'加油！训练初见成效':'还未开始训练'}}
+                  </view>
                 </view>
               </view>
             </view>
             <!-- 进行中 -->
           </block>
-        </scroll-view>
+        </view>
       </swiper-item>
       <swiper-item>
-        <scroll-view scroll-y="true" class="scoll-h">
+        <view  class="scoll-h">
           <view wx:if="{{trained.length == 0}}">
             <view class='indextextnone'>暂无数据~</view>
             <image src='../../../image/indexnone.png' class='indexnone_img'></image>
@@ -110,7 +108,7 @@
             </view>
             <!-- 已完成 -->
           </block>
-        </scroll-view>
+        </view>
       </swiper-item>
     </swiper>
   </view>

@@ -25,9 +25,14 @@ App({
           data: api.getSessionKey(res.code),
           method: 'post',
           success: function(result){
+            console.log(result)
             let d = api.parseResult(result);
             if (d.code == api.getSuccessCode()) {
-              that.globalData.session_key = d.data.session_key;
+              if (that.globalData.sessionKeyCallBack){
+                that.globalData.sessionKeyCallBack(d.data.session_key);
+              }else{
+                that.globalData.session_key = d.data.session_key;
+              }
             } else {
               wx.showToast({
                 title: d.msg,

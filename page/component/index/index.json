@@ -1,7 +1,11 @@
 {
   "usingComponents": {
     "i-modal": "../../../dist/modal/index",
-    "i-rate": "../../../dist/rate/index"
+    "i-rate": "../../../dist/rate/index",
+    "i-icon": "../../../dist/icon/index",
+    "i-spin": "../../../dist/spin/index"
   },
-  "navigationBarTitleText": "元新智能健康管理"
+  "navigationBarTitleText": "元新智能健康管理",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle":"#f04848"
 }

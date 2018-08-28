@@ -106,9 +106,11 @@ Page({
         this.videoCtx.pause();
         this.setData({ pauseState: true })
       }
-      setTimeout(() => {
-        this.videoCtx.play()
-      }, pauseTime);
+      if(pauseTime){
+        setTimeout(() => {
+          this.videoCtx.play()
+        }, pauseTime);
+      }
     }
     
    
