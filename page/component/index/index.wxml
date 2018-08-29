@@ -75,12 +75,12 @@
           <block wx:for="{{trained}}" wx:key="*this" wx:for-item="item">
             <!-- 已完成 -->
             <view current="{{item.state}}" class="weui-form-preview view_b line_none card_radius ml mr mt-sm mb-sm">
-              <view bindtap='indexNav' class="weui-form-preview__bd">
+              <view  data-no='{{item.id}}' bindtap='indexNav' class="weui-form-preview__bd">
                 <view class="weui-form-preview__item">
                   <text class="font-size-15 pull-left text-block ">{{item.pe_cate_id}}</text>
-                  <text class="span_red_border font-size-12 ml pull-left">
-                    {{item.level_day}}天/{{item.lnum}}次
-                  </text>
+                  <view class="span_red_border font-size-12 ml pull-left">
+                    {{item.level_day}}次
+                  </view>
                   <text class="text-red card_acress font-size-13">查看详情</text>
                 </view>
                 <view class="weui-form-preview__item">
@@ -93,16 +93,16 @@
                   <view class="range_box pull-left">
                     <text class="range_active" style="width:{{item.percent}}%;"></text>
                   </view>
-                  <text class="font-size-13 text-gray pull-left block" style="width:70px;">
+                  <view class="font-size-13 text-gray pull-left block" style="width:70px;">
                     完成{{item.percent}}%
-                  </text>
+                  </view>
                 </view>
                 <view class="weui-form-preview__item mt-sm">
                   <image src="../../../image/icon_b.png" class="pull-left mt-sm icon"></image>
                   <text class="pull-left font-size-13 ml-sm">恭喜您完成训练计划</text>
-                  <text data-no='{{item.id}}' catchtap='showDialogBtn' class="weui-btn weui_btn_red_round waves weui_btn_mini text-middle pull-right">
+                  <view data-no='{{item.id}}' catchtap='showDialogBtn' class="weui-btn weui_btn_red_round waves weui_btn_mini text-middle pull-right">
                     评价
-                  </text>
+                  </view>
                 </view>
               </view>
             </view>
@@ -120,7 +120,7 @@
       </i-cell>
     </view>
     <view class="section">
-      <textarea class='evaluate_textarea' placeholder="" bindblur="bindTextAreaBlur" />
+      <textarea class='evaluate_textarea' placeholder="" bindinput="bindTextAreaBlur" />
     </view>
   </i-modal>
 </page>

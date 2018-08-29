@@ -105,11 +105,11 @@ Page({
         let timeOpt = optName.match(/\d+分/);
         pauseTime = timeOpt[0].match(/\d+/) * 60*1000;
       }
-      if(!this.data.pauseState){
+      if(pauseTime && !this.data.pauseState){
         this.videoCtx.pause();
         this.setData({ pauseState: true })
       }
-      if(pauseTime){
+      if(pauseTime ){
         setTimeout(() => {
           this.videoCtx.play()
         }, pauseTime);

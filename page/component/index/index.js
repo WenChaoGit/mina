@@ -40,8 +40,9 @@ Page({
   onStar({ detail }) {
     const index = detail.index;
     this.setData({
-      'starIndex2': index
+      starIndex2: index
     })
+    
   },
   async touchStart({changedTouches}){
     let touchStartY = changedTouches[0].clientY;
@@ -144,10 +145,10 @@ Page({
   async handleUserRate({ detail }) {
     const index = detail.index;
     if (index === 0) {
-      that.setData({ showModal: false, feedback_content: '' }); return;
+      this.setData({ showModal: false, feedback_content: '' }); return;
     }
     if (index === 1) {
-      let { pe_order_id, startIndex2: feedback_level, feedback_content } = this.data;
+      let { feedback_order_id: pe_order_id, starIndex2:feedback_level, feedback_content } = this.data;
       let { code, msg: title } = await api.setOderFeedback({
         pe_order_id, feedback_level, feedback_content
       });
@@ -163,7 +164,7 @@ Page({
    * @desc 用户在评价的模态窗中输入文字时,把获取到的评价内容传递到data中feedback_content中
    * @param {小程序事件对象event中的detail} detail
    */
-  bindTextAreaBlur: function ({ detail }) {
+  bindTextAreaBlur({ detail }) {
     this.setData({ feedback_content: detail.value });
   },
 
