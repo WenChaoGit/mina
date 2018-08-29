@@ -26,6 +26,7 @@ const actionCode = {
   setUserinfo: 10013, //用户授权设置userinfo
   getResourceurl: 10014, //获取所有资源url
   updateUserTrainLog: 10015, //更新用户训练记录
+  getAbousUsData:10016 //获取关于我们的信息
 }
 /**
  * 接口地址
@@ -265,6 +266,19 @@ function updateUserTrainLog({ trainResourceList, peOrderId }) {
   return result;
 }
 
+/**
+ * @action 10016
+ * @desc 获取关于我们的信息
+ */
+function getAboutUsData(){
+  http._showLoading();
+  let data = {  };
+  let action = actionCode['getAbousUsData'];
+  let result = http.request({ data, action });
+  http._hideLoading();
+  return result;
+}
+
 module.exports = {
   parseResult,
   getSuccessCode,
@@ -286,5 +300,6 @@ module.exports = {
   //训练
   getResourceUrl,
   updateUserTrainLog,
+  getAboutUsData
 }
 

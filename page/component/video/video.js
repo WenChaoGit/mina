@@ -77,7 +77,7 @@ Page({
       duration: wxToastDuraion
     });
     // 本次训练结束,返回训练列表
-    wx.navigateTo({
+    wx.redirectTo({
       url: `/page/component/train/train?pe_order_id=${peOrderId}`
     });
 

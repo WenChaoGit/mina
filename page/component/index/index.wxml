@@ -27,7 +27,7 @@
         <view  style="height:{{scrollHeight}}px;">
           <view wx:if="{{ training.length==0}}">
             <view class='indextextnone'>暂无数据~</view>
-            <image src='../../../image/indexnone.png' class='indexnone_img'></image>
+            <image src='../../../image/none.jpg' class='indexnone_img'></image>
           </view>
           <block wx:for="{{training}}" wx:key="item.id" wx:for-item="item">
             <!-- 进行中 -->
@@ -70,7 +70,7 @@
         <view  class="scoll-h">
           <view wx:if="{{trained.length == 0}}">
             <view class='indextextnone'>暂无数据~</view>
-            <image src='../../../image/indexnone.png' class='indexnone_img'></image>
+            <image src='../../../image/none.jpg' class='indexnone_img'></image>
           </view>
           <block wx:for="{{trained}}" wx:key="*this" wx:for-item="item">
             <!-- 已完成 -->

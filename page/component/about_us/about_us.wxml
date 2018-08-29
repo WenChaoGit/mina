@@ -2,7 +2,7 @@
 <view class='about_box'>
   <image src='../../../image/logo.png' class='abut_img'></image>
   <view>
-  <view class='about_text'>元新康复是国际化现代康复医疗连锁品牌，旗下有运动、产后、儿童等高品质专科康复中心和高端康复医院等康复机构。</view>
-  <view class='about_text'>元新康复以恢复和保持健康水平，减少医疗支出为目标，采用国内外知名专家指导制定的国际领先的康复解决方案，使用专业精湛的治疗手法和世界先进的康复设备，为客户进行精准全面的身体功能评估，制定个性化的治疗训练解决方案，由获得执业资质的康复医师和康复治疗师为客户进行康复治疗和训练指导。并通过云服务平台，为客户和家庭提供长期健康管理服务，让客户重建功能水平，回归家庭美好生活。</view>
+  <view class='about_text'>{{title}}</view>
+  <view class='about_text'>{{desc}}</view>
   </view>
 </view>
