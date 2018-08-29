@@ -75,10 +75,10 @@ Page({
         duration: wxToastDuraion
       }); return;
     }
-    wx.showToast({
-      title: msgList['train_completed'],
-      duration: wxToastDuraion
-    });
+    // wx.showToast({
+    //   title: msgList['train_completed'],
+    //   duration: wxToastDuraion
+    // });
     // 本次训练结束,返回训练列表
     wx.redirectTo({
       url: `/page/component/train/train?pe_order_id=${peOrderId}`
@@ -124,6 +124,7 @@ Page({
    * @return mixed 
    */
   async onVideoEnd(e) {
+    console.log(e);
     let { type } = e; //判断视频是否播完
     let { trainResourceList, peOrderId } = app.globalData;
     if (!trainResourceList && !peOrderId) {

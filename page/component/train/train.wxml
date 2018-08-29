@@ -1,26 +1,29 @@
-<swiper-item>
-  <scroll-view scroll-y="true" class="scoll-h">
-    <block wx:for="{{level}}" wx:key="*this" wx:for-item="item">
-      <block wx:if="{{item.list.length}}" wx:for="{{item.list}}" wx:key="*this" wx:for-item="list">
-        <view class="weui-form-preview line_none card_radius xunlian_bg ml mr mt-sm">
-          <view class="weui-form-left" bindtap='videoBtn' data-no='{{list.resource_id}}' data-type='{{list.resource_type}}'>
-            <view>
-              <text class='weui_title'>{{list.question_name}}</text>
+<view class='box'>
+    <swiper-item>
+    <scroll-view scroll-y="true" class="scoll-h">
+      <block wx:for="{{level}}" wx:key="*this" wx:for-item="item">
+        <block wx:if="{{item.list.length}}" wx:for="{{item.list}}" wx:key="*this" wx:for-item="list">
+          <view class="weui-form-preview line_none card_radius xunlian_bg ml mr mt-sm">
+            <view class="weui-form-left" bindtap='videoBtn' data-no='{{list.resource_id}}' data-type='{{list.resource_type}}'>
+              <view>
+                <text class='weui_title'>{{list.question_name}}</text>
+              </view>
+              <view class='minuBox'>
+                <block wx:for="{{list.treat}}" wx:key="*this" wx:for-item="treat">
+                  <text>{{treat.name}}</text>
+                </block>
+              </view>
             </view>
-            <view class='minuBox'>
-              <block wx:for="{{list.treat}}" wx:key="*this" wx:for-item="treat">
-                <text>{{treat.name}}</text>
-              </block>
+            <view class='weui-form-right'>
+              <image src='../../../image/one_start.png'></image>
             </view>
           </view>
-          <view class='weui-form-right'>
-            <image src='../../../image/one_start.png'></image>
-          </view>
-        </view>
+        </block>
       </block>
-    </block>
-    <view>
-      <text class='start' bindtap='startTrain'>开始训练</text>
-    </view>
-  </scroll-view>
-</swiper-item>
+    </scroll-view>
+  </swiper-item>
+  
+</view>
+<footer>
+  <text class='start' bindtap='startTrain'>开始训练</text>
+</footer>

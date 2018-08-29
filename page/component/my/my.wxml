@@ -15,7 +15,7 @@
       <image src="/image/my_icon_2.png" class='my_icon'></image>
     </view>
     <view class="weui-cell__bd">
-      <button class="userInfoBtn" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">授权完善信息</button>
+      <button class="userInfoBtn" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">完善个人信息</button>
     </view>
     <view class="weui-cell__ft"></view>
   </view>

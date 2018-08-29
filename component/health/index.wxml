@@ -9,7 +9,7 @@
         <text  class="content-item">评估医师: {{health.admin_id}}</text>
         <text  class="content-item">评估时间: {{health.created}}</text>
         <text  class="content-item">评估门店: {{health.store_id}}</text>
-        <text  class="content-item">评估结果: {{health.pe_result}}</text>
+        <text  class="content-item  weui-media-box__desc_1">评估结果: {{health.pe_result}}</text>
     </view>
-    <view class="footer"></view>
+    
 </view>

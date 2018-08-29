@@ -29,6 +29,7 @@
     flex-direction: column;
     color: #373737;
     padding:15px 10px 0px;
+    margin: 15rpx 0;
 }
 .pg-img{
     width: 32rpx;
@@ -44,8 +45,16 @@
     height: 100rpx;
     line-height: 64rpx;
 }
-.footer{
-    height: 100rpx;
-}
 
+
+.weui-media-box__desc_1{
+  color:#666;
+  font-size:15px;
+  line-height:2;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:1;
+}
 

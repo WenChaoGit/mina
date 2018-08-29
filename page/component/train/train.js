@@ -58,6 +58,7 @@ Page({
 		if (!code || code == errCode) {
 			wx.showToast({ title }); return;
 		}
+		console.log(data);
 		this.setData({ ...data });
 	},
 	async startTrain() {

@@ -1,7 +1,7 @@
 <!--pages/my/health/health_file.wxml-->
 <view wx:if="{{info.length == 0}}">
     <view class='indextextnone'>暂无数据~</view>
-    <image src='../../../image/indexnone.png' class='indexnone_img'></image>
+    <image src='../../../image/none.jpg' class='indexnone_img'></image>
 </view>
 <swiper-item class=''>
   <scroll-view scroll-y="true" class="scoll-h">
