@@ -41,9 +41,48 @@ Page({
         session_key: app.globalData.session_key,
       });
     }else{
-      app.globalData.sessionKeyCallBack = session_key => {
-        this.setData({ session_key });
+      if (app.globalData.isOnLanuch){
+        app.globalData.sessionKeyCallBack = session_key => {
+          this.setData({ session_key });
+        }
+      }else{
+        wx.login({
+          success: res => {
+            var thisapp = app;
+            var that = this;
+            // 发送 res.code 到后台换取 openId, sessionKey, unionId
+            wx.request({
+              url: api.getPort(),
+              data: api.getSessionKey(res.code),
+              method: 'post',
+              success: function (result) {
+                let d = api.parseResult(result);
+                console.log(result);
+                if (d.code == api.getSuccessCode()) {
+                  thisapp.globalData.session_key = d.data.session_key;
+                  thisapp.globalData.isOnLanuch = true;
+                  that.setData({
+                    session_key: d.data.session_key,
+                  });
+                } else {
+                  wx.showToast({
+                    title: d.msg,
+                    icon: 'none',
+                  })
+                }
+              },
+              fail: function ({ errMsg }) {
+                wx.showToast({
+                  title: '网络连接错误！',
+                  icon: 'none',
+                })
+              }
+            });
+          }
+        });
+
       }
+      
     }
     let user = session.getUserInfo();
     // this.setData({

@@ -4,7 +4,8 @@ var session = require('./utils/session.js');
 App({
   globalData:{
     session_key: '',
-    userInfo: null
+    userInfo: null,
+    isOnLanuch:false,
   },
   data:{
     session_key : '',
@@ -14,7 +15,7 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
+    this.globalData.isOnLanuch = true;
     // 登录
     wx.login({
       success: res => {

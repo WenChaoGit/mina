@@ -30,6 +30,9 @@ Page({
   onLoad: function (options) {
     let { resource_id } = options;
     let { trainResourceList } = app.globalData;
+    if(!trainResourceList){
+      trainResourceList = [];
+    }
     let videoCount = trainResourceList.length;
     this.setData({ resource_id, videoCount });
   },

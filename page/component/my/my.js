@@ -4,7 +4,7 @@ const api = require('../../../utils/api.js');
 const session = require('../../../utils/session.js');
 import regeneratorRuntime from '../../../utils/runtime'; //用来编译async await
 import { errCode } from '../../../utils/config.js';
-
+const app = getApp();
 Page({
 
   /**
@@ -123,8 +123,9 @@ Page({
       cancelText: "取消",
       success: function (res) {
         if (res.confirm) {
+          app.globalData.isOnLanuch = false;
           session.logout()
-          wx.reLaunch({
+          wx.redirectTo({
             url: '/page/component/login/index',
           })
         }
